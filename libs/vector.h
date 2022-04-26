@@ -88,4 +88,13 @@ int vector_insert(vector *v, int index, void *value);
  */
 void *vector_remove(vector *v, int index);
 
+/**
+ * @brief Calls a function for each element in the vector
+ * @param v Vector
+ * @param func Pointer to function. Must take one argument, a pointer to
+ * the element.
+ * @return (void)
+ */
+void vector_print(vector *v, void (*func)(void *));
+
 #endif

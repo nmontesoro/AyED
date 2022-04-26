@@ -36,3 +36,12 @@ double complex_angle(complex_t *a);
 
 /* Returns the string representation of a complex number */
 char *complex_to_string(complex_t *a);
+
+/**
+ * @brief Calls a function that prints the value of a complex number
+ * @param cpx Number
+ * @param printfunct Function to be called. Must take two arguments: 
+ * real and imaginary part (both of type double)
+ * @return (void)
+ */
+void complex_print(complex_t *cpx, void (*printfunct)(double, double));

@@ -72,3 +72,8 @@ char *complex_to_string(complex_t *a)
     
     return str;
 }
+
+void complex_print(complex_t *cpx, void (*printfunct)(double,  double))
+{
+    (*printfunct)(complex_real(cpx), complex_imaginary(cpx));
+}

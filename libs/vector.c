@@ -129,7 +129,7 @@ void *vector_remove(vector *v, int index)
         {
             int copy_size = v->max_size - index - 1;
             void **copy = vector_get_copy_from_index(v, index + 1);
-            
+
             for (int i = 0; i < copy_size; i++)
             {
                 v->a[index + i] = copy[i];
@@ -155,4 +155,12 @@ static void **vector_get_copy_from_index(vector *v, int index)
     }
 
     return copy;
+}
+
+void vector_print(vector *v, void (*func)(void *))
+{
+    for (int i = 0; i < v->size; i++)
+    {
+        (*func)(v->a[i]);
+    }
 }

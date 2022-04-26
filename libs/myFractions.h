@@ -37,3 +37,12 @@ float fraction_to_float(fraction_t *frac);
 
 /* Returns true if two fractions are equal */
 int fraction_compare(fraction_t *frac1, fraction_t *frac2);
+
+/**
+ * @brief Calls a function that prints the value of a fraction.
+ * @param frac fraction
+ * @param printfunct Function to be called. Must take two arguments:
+ * numerator and denominator parts (both of type int)
+ * @return (void)
+ */
+void fraction_print(fraction_t *frac, void (*printfunct)(int, int));
