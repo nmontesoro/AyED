@@ -105,7 +105,7 @@ char *fraction_to_string(fraction_t *frac)
 
 float fraction_to_float(fraction_t *frac)
 {
-    return (frac->numerator / frac->denominator);
+    return ((float) frac->numerator / (float) frac->denominator);
 }
 
 int fraction_compare(fraction_t *frac1, fraction_t *frac2)
