@@ -415,4 +415,28 @@ spec("vector")
         vector_free(v);
         free(vals);
     }
+
+    describe("vector_max_size")
+    {
+        context("when v is NULL")
+        {
+            it("should return 0")
+            {
+                check(!vector_max_size((vector *)NULL));
+            }
+        }
+
+        context("when v is not NULL")
+        {
+            it("should return the maximum size of the vector")
+            {
+                v = vector_new(100);
+
+                check(vector_max_size(v) == 100);
+
+                vector_free(v);
+            }
+        }
+    }
+
 }
