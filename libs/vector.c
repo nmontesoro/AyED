@@ -38,7 +38,7 @@ void vector_free(vector *v)
     }
 }
 
-int vector_size(vector *v)
+int vector_size(const vector *v)
 {
     return v ? v->size : -1;
 }
@@ -53,7 +53,7 @@ int vector_isempty(vector *v)
     return v ? (!v->size) : -1;
 }
 
-void *vector_get(vector *v, int index)
+void *vector_get(const vector *v, int index)
 {
     void *ptr = NULL;
 
@@ -166,7 +166,7 @@ void vector_print(vector *v, void (*func)(void *))
     }
 }
 
-int vector_max_size(vector *v)
+int vector_max_size(const vector *v)
 {
     int max_size = 0;
 

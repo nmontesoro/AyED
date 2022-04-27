@@ -28,7 +28,7 @@ void vector_free(vector *v);
  * @param v Vector
  * @return Size of the vector, or -1 if v is NULL
  */
-int vector_size(vector *v);
+int vector_size(const vector *v);
 
 /**
  * @brief Used to check if a vector is full (duh!)
@@ -51,7 +51,7 @@ int vector_isempty(vector *v);
  * @return Pointer to data at specified index, or NULL if index is
  * invalid
  */
-void *vector_get(vector *v, int index);
+void *vector_get(const vector *v, int index);
 
 /**
  * @brief Sets the value of vector at a specified index
@@ -102,7 +102,7 @@ void vector_print(vector *v, void (*func)(void *));
  * @param v Vector
  * @return Maximum size of the vector
  */
-int vector_max_size(vector *v);
+int vector_max_size(const vector *v);
 
 /**
  * @brief Returns a copy of a vector, at a diferent memory address
