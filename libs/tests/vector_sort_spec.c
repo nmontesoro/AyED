@@ -33,7 +33,7 @@ spec("vector_sort")
 
         context("when v is NULL")
         {
-            xit("should return NULL")
+            it("should return NULL")
             {
                 check(!vector_sort_insertion(NULL, 4, &cmp_func));
             }
@@ -41,7 +41,7 @@ spec("vector_sort")
 
         context("when comparison function pointer is NULL")
         {
-            xit("should return NULL")
+            it("should return NULL")
             {
                 check(!vector_sort_insertion(v, 4, NULL));
             }
@@ -49,7 +49,7 @@ spec("vector_sort")
 
         context("when data_size is invalid")
         {
-            xit("should return NULL")
+            it("should return NULL")
             {
                 check(!vector_sort_insertion(v, -1, &cmp_func));
                 check(!vector_sort_insertion(v, 0, &cmp_func));
