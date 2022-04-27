@@ -26,19 +26,19 @@ int cmp_func(void *a_ptr, void *b_ptr)
 
 int cmp_func_sel(void **list, int length)
 {
-    int min = *(int *) list[0];
+    int min = *(int *)list[0];
     int index = 0;
 
     for (int i = 1; i < length; i++)
     {
-        int val = *(int *) list[i];
+        int val = *(int *)list[i];
         if (val < min)
         {
             min = val;
             index = i;
         }
     }
-    
+
     return index;
 }
 
@@ -90,7 +90,7 @@ spec("vector_sort")
             it("should have sorted the values")
             {
                 vector *v_sorted = vector_sort_insertion(v, sizeof(int), &cmp_func);
-                
+
                 vector_free(v);
                 v = v_sorted;
 
@@ -153,7 +153,7 @@ spec("vector_sort")
             it("should have sorted the values")
             {
                 vector *v_sorted = vector_sort_bubble(v, sizeof(int), &cmp_func);
-                
+
                 vector_free(v);
                 v = v_sorted;
 
@@ -172,9 +172,8 @@ spec("vector_sort")
         }
     }
 
-        describe("vector_sort_selection")
+    describe("vector_sort_selection")
     {
-
         context("when v is NULL")
         {
             it("should return NULL")
@@ -216,7 +215,7 @@ spec("vector_sort")
             it("should have sorted the values")
             {
                 vector *v_sorted = vector_sort_selection(v, sizeof(int), &cmp_func_sel);
-                
+
                 vector_free(v);
                 v = v_sorted;
 
