@@ -108,8 +108,8 @@ int vector_max_size(const vector *v);
  * @brief Sorts a vector using the insertion algorithm
  * @param v Vector
  * @param data_size Size (in bytes) of each item in the vector
- * @param cmp_func A function to use as comparison. Must take two 
- * parameters, a and b, and return 0 if a == b, -1 if a < b or 1 
+ * @param cmp_func A function to use as comparison. Must take two
+ * parameters, a and b, and return 0 if a == b, -1 if a < b or 1
  * if a > b
  * @return A new, sorted vector
  */
@@ -122,5 +122,16 @@ vector *vector_sort_insertion(const vector *v, int data_size, int (*cmp_func)(vo
  * @return A copy of the vector
  */
 vector *vector_copy(const vector *v, int data_size);
+
+/**
+ * @brief Sorts a vector using the bubble sort algorithm
+ * @param v Vector
+ * @param data_size Size (in bytes) of each item in the vector
+ * @param cmp_func A function to use as comparison. Must take two
+ * parameters, a and b, and return 0 if a == b, -1 if a < b or 1
+ * if a > b
+ * @return A new, sorted vector
+ */
+vector *vector_sort_bubble(const vector *v, int data_size, int (*cmp_func)(void *, void *));
 
 #endif

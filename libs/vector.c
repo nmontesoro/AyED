@@ -229,7 +229,37 @@ vector *vector_sort_insertion(const vector *v, int data_size, int (*cmp_func)(vo
             }
             i++;
         }
-        
+    }
+
+    return copy;
+}
+
+vector *vector_sort_bubble(const vector *v, int data_size, int (*cmp_func)(void *, void *))
+{
+    vector *copy = NULL;
+    void **data = NULL;
+    int size = 0,
+        swapped = 0;
+
+    if (v && data_size > 0 && cmp_func)
+    {
+        copy = vector_copy(v, data_size);
+        size = vector_size(v);
+
+        do
+        {
+            swapped = 0;
+
+            for (int i = 1; i < size; i++)
+            {
+                if ((*cmp_func)(vector_get(copy, i), vector_get(copy, i - 1)) == -1)
+                {
+                    data = vector_remove(copy, i);
+                    vector_insert(copy, i - 1, data);
+                    swapped = 1;
+                }
+            }
+        } while (swapped);
     }
 
     return copy;
