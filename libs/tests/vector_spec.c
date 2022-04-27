@@ -439,4 +439,55 @@ spec("vector")
         }
     }
 
+    describe("vector_copy")
+    {
+        context("when v is NULL")
+        {
+            it("should return NULL")
+            {
+                check(!vector_copy(NULL, sizeof(int)));
+            }
+        }
+
+        context("when data_size is invalid")
+        {
+            it("should return NULL")
+            {
+                check(!vector_copy(v, -1), "when size is negative");
+                check(!vector_copy(v, 0), "when size is zero");
+            }
+        }
+
+        context("when v is not NULL")
+        {
+            it("should create a copy of the original vector, with new memory addresses")
+            {
+                v = vector_new(10);
+                vector *v_copy = NULL;
+
+                for (int i = 0; i < 10; i++)
+                {
+                    int *val = (int *)malloc(sizeof(int));
+                    *val = i;
+                    vector_add(v, (void *)val);
+                }
+
+                v_copy = vector_copy(v, sizeof(int));
+
+                for (int i = 0; i < 10; i++)
+                {
+                    void *orig_ptr = vector_get(v, i);
+                    void *copy_ptr = vector_get(v_copy, i);
+
+                    check(orig_ptr != copy_ptr,
+                          "memory addresses are the same");
+                    check(*(int *)orig_ptr == *(int *)copy_ptr,
+                          "values are different");
+                }
+
+                vector_free(v);
+                vector_free(v_copy);
+            }
+        }
+    }
 }
