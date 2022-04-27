@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h> // for memcpy
 #include "vector.h"
 
 static void **vector_get_copy_from_index(vector *v, int index);
@@ -176,3 +177,30 @@ int vector_max_size(vector *v)
 
     return max_size;
 }
+
+vector *vector_copy(const vector *v, int data_size)
+{
+    int size = 0,
+        max_size = 0;
+    vector *copy = NULL;
+
+    if (v && data_size > 0)
+    {
+        size = vector_size(v);
+        max_size = vector_max_size(v);
+        copy = vector_new(max_size);
+
+        for (int i = 0; i < size; i++)
+        {
+            /* Create a copy of the value in memory */
+            void *val = malloc(data_size);
+            memcpy(val, vector_get(v, i), data_size);
+
+            /* Add said copy to the new vector */
+            vector_add(copy, val);
+        }
+    }
+
+    return copy;
+}
+

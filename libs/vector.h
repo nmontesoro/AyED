@@ -104,4 +104,12 @@ void vector_print(vector *v, void (*func)(void *));
  */
 int vector_max_size(vector *v);
 
+/**
+ * @brief Returns a copy of a vector, at a diferent memory address
+ * @param v Vector
+ * @param data_size Size (in bytes) of each item in the vector
+ * @return A copy of the vector
+ */
+vector *vector_copy(const vector *v, int data_size);
+
 #endif
