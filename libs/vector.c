@@ -96,7 +96,7 @@ int vector_insert(vector *v, int index, void *value)
 {
     int success = 0;
 
-    if (v && index >= 0 && index < v->size - 1 && value)
+    if (v && index >= 0 && index < v->size && value)
     {
         int copy_size = v->max_size - index;
         void **copy = vector_get_copy_from_index(v, index);
