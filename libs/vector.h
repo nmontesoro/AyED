@@ -83,7 +83,7 @@ int vector_insert(vector *v, int index, void *value);
  * @brief Removes an element from the vector at the specified index
  * @param v Vector
  * @param index Index
- * @return Pointer to the removed element, so that it can be freed, or 
+ * @return Pointer to the removed element, so that it can be freed, or
  * NULL if something failed.
  */
 void *vector_remove(vector *v, int index);
@@ -103,6 +103,17 @@ void vector_print(vector *v, void (*func)(void *));
  * @return Maximum size of the vector
  */
 int vector_max_size(const vector *v);
+
+/**
+ * @brief Sorts a vector using the insertion algorithm
+ * @param v Vector
+ * @param data_size Size (in bytes) of each item in the vector
+ * @param cmp_func A function to use as comparison. Must take two 
+ * parameters, a and b, and return 0 if a == b, -1 if a < b or 1 
+ * if a > b
+ * @return A new, sorted vector
+ */
+vector *vector_sort_insertion(const vector *v, int data_size, int (*cmp_func)(void *, void *));
 
 /**
  * @brief Returns a copy of a vector, at a diferent memory address

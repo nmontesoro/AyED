@@ -204,3 +204,33 @@ vector *vector_copy(const vector *v, int data_size)
     return copy;
 }
 
+vector *vector_sort_insertion(const vector *v, int data_size, int (*cmp_func)(void *, void *))
+{
+    vector *copy = NULL;
+    void **data = NULL;
+    int size = 0,
+        i = 1,
+        j = 0;
+
+    if (v && data_size > 0 && cmp_func)
+    {
+        copy = vector_copy(v, data_size);
+        size = vector_size(v);
+
+        while (i < size)
+        {
+            j = i;
+
+            while (j > 0 && (*cmp_func)(vector_get(copy, j), vector_get(copy, j - 1)) == -1)
+            {
+                data = vector_remove(copy, j);
+                vector_insert(copy, j - 1, data);
+                j--;
+            }
+            i++;
+        }
+        
+    }
+
+    return copy;
+}
