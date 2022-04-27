@@ -178,7 +178,7 @@ spec("vector_sort")
         {
             it("should return NULL")
             {
-                check(!vector_sort_selection(NULL, 4, &cmp_func));
+                check(!vector_sort_selection(NULL, 4, &cmp_func_sel));
             }
         }
 
@@ -194,8 +194,8 @@ spec("vector_sort")
         {
             it("should return NULL")
             {
-                check(!vector_sort_selection(v, -1, &cmp_func));
-                check(!vector_sort_selection(v, 0, &cmp_func));
+                check(!vector_sort_selection(v, -1, &cmp_func_sel));
+                check(!vector_sort_selection(v, 0, &cmp_func_sel));
             }
         }
 
