@@ -178,19 +178,23 @@ int vector_max_size(const vector *v)
     return max_size;
 }
 
-vector *vector_copy(const vector *v, int data_size)
+vector *vector_copy(const vector *v, int data_size, int li, int ui)
 {
-    int size = 0,
-        max_size = 0;
+    int max_size = 0;
     vector *copy = NULL;
 
-    if (v && data_size > 0)
+    if (ui == -1)
     {
-        size = vector_size(v);
+        ui = vector_size(v) - 1;
+    }
+
+    if (v && data_size > 0 && li >= 0 && (ui > li && ui < vector_size(v)))
+    {
+
         max_size = vector_max_size(v);
         copy = vector_new(max_size);
 
-        for (int i = 0; i < size; i++)
+        for (int i = li; i <= ui; i++)
         {
             /* Create a copy of the value in memory */
             void *val = malloc(data_size);
@@ -214,7 +218,7 @@ vector *vector_sort_insertion(const vector *v, int data_size, int (*cmp_func)(vo
 
     if (v && data_size > 0 && cmp_func)
     {
-        copy = vector_copy(v, data_size);
+        copy = vector_copy(v, data_size, 0, -1);
         size = vector_size(v);
 
         while (i < size)
@@ -243,7 +247,7 @@ vector *vector_sort_bubble(const vector *v, int data_size, int (*cmp_func)(void 
 
     if (v && data_size > 0 && cmp_func)
     {
-        copy = vector_copy(v, data_size);
+        copy = vector_copy(v, data_size, 0, -1);
         size = vector_size(v);
 
         do

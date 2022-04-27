@@ -445,7 +445,7 @@ spec("vector")
         {
             it("should return NULL")
             {
-                check(!vector_copy(NULL, sizeof(int)));
+                check(!vector_copy(NULL, sizeof(int), 0, -1));
             }
         }
 
@@ -453,8 +453,8 @@ spec("vector")
         {
             it("should return NULL")
             {
-                check(!vector_copy(v, -1), "when size is negative");
-                check(!vector_copy(v, 0), "when size is zero");
+                check(!vector_copy(v, -1, 0, -1), "when size is negative");
+                check(!vector_copy(v, 0, 0, -1), "when size is zero");
             }
         }
 
@@ -472,7 +472,7 @@ spec("vector")
                     vector_add(v, (void *)val);
                 }
 
-                v_copy = vector_copy(v, sizeof(int));
+                v_copy = vector_copy(v, sizeof(int), 0, -1);
 
                 for (int i = 0; i < 10; i++)
                 {
@@ -483,6 +483,34 @@ spec("vector")
                           "memory addresses are the same");
                     check(*(int *)orig_ptr == *(int *)copy_ptr,
                           "values are different");
+                }
+
+                vector_free(v);
+                vector_free(v_copy);
+            }
+        }
+
+        context("when v is not NULL and li and ui are set")
+        {
+            it("should copy a subset of the vector")
+            {
+                v = vector_new(5);
+                vector *v_copy = NULL;
+
+                /* {1, 2, 3, 4, 5} */
+                for (int i = 0; i < 5; i++)
+                {
+                    int *val = (int *)malloc(sizeof(int));
+                    *val = i + 1;
+                    vector_add(v, (void *)val);
+                }
+
+                /* Should create {2, 3, 4, x, x} */
+                v_copy = vector_copy(v, sizeof(int), 1, 3);
+
+                for (int i = 0; i < 3; i++)
+                {
+                    check(*(int *)vector_get(v_copy, i) == (i + 2));
                 }
 
                 vector_free(v);

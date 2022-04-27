@@ -119,9 +119,12 @@ vector *vector_sort_insertion(const vector *v, int data_size, int (*cmp_func)(vo
  * @brief Returns a copy of a vector, at a diferent memory address
  * @param v Vector
  * @param data_size Size (in bytes) of each item in the vector
+ * @param li Index from which to start copying.
+ * @param ui Index at which to stop copying. Set to -1 to copy until the
+ * last item.
  * @return A copy of the vector
  */
-vector *vector_copy(const vector *v, int data_size);
+vector *vector_copy(const vector *v, int data_size, int li, int ui);
 
 /**
  * @brief Sorts a vector using the bubble sort algorithm
