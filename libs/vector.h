@@ -137,4 +137,19 @@ vector *vector_copy(const vector *v, int data_size, int li, int ui);
  */
 vector *vector_sort_bubble(const vector *v, int data_size, int (*cmp_func)(void *, void *));
 
+/**
+ * @brief Sorts a vector using the selection sort algorithm
+ * @param v Vector
+ * @param data_size Size (in bytes) of each item in the vector
+ * @param cmp_func A function to use as comparison. Must take two
+ * parameters: list (a list of the remaining items) and length (the
+ * number of remaining items). Must return the index of the item of
+ * interest.
+ * For instance, if you want to sort a vector in ascending order, this
+ * function would return the index of the minimum value it finds every
+ * time it's called.
+ * @return A new, sorted vector
+ */
+vector *vector_sort_selection(const vector *v, int data_size, int (*cmp_func)(void **, int));
+
 #endif

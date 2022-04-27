@@ -268,3 +268,30 @@ vector *vector_sort_bubble(const vector *v, int data_size, int (*cmp_func)(void 
 
     return copy;
 }
+
+vector *vector_sort_selection(const vector *v, int data_size,
+                              int (*cmp_func)(void **, int))
+{
+    vector *copy = NULL,
+           *subset_vector = NULL;
+    void *data = NULL;
+    int size = 0,
+        index = 0;
+
+    if (v && data_size > 0 && cmp_func)
+    {
+        copy = vector_copy(v, data_size, 0, -1);
+        size = vector_size(copy);
+
+        for (int i = 0; i < size - 1; i++)
+        {
+            subset_vector = vector_copy(copy, data_size, i, -1);
+            index = (*cmp_func)(subset_vector->a, size - i);
+            data = vector_remove(copy, i + index);
+            vector_insert(copy, i, data);
+            vector_free(subset_vector);
+        }
+    }
+
+    return copy;
+}
