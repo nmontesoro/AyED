@@ -164,3 +164,15 @@ void vector_print(vector *v, void (*func)(void *))
         (*func)(v->a[i]);
     }
 }
+
+int vector_max_size(vector *v)
+{
+    int max_size = 0;
+
+    if (v)
+    {
+        max_size = v->max_size;
+    }
+
+    return max_size;
+}

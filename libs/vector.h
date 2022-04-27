@@ -97,4 +97,11 @@ void *vector_remove(vector *v, int index);
  */
 void vector_print(vector *v, void (*func)(void *));
 
+/**
+ * @brief Returns the maximum size of a given vector
+ * @param v Vector
+ * @return Maximum size of the vector
+ */
+int vector_max_size(vector *v);
+
 #endif
