@@ -233,4 +233,66 @@ spec("vector_sort")
             }
         }
     }
+
+        describe("vector_sort_shell")
+    {
+        context("when v is NULL")
+        {
+            it("should return NULL")
+            {
+                check(!vector_sort_shell(NULL, 4, &cmp_func));
+            }
+        }
+
+        context("when comparison function pointer is NULL")
+        {
+            it("should return NULL")
+            {
+                check(!vector_sort_shell(v, 4, NULL));
+            }
+        }
+
+        context("when data_size is invalid")
+        {
+            it("should return NULL")
+            {
+                check(!vector_sort_shell(v, -1, &cmp_func));
+                check(!vector_sort_shell(v, 0, &cmp_func));
+            }
+        }
+
+        context("when everything is right")
+        {
+            v = vector_new(10);
+            int stored_val = 0;
+
+            /* [0, -1, 2, -3, 4, -5, 6, -7, 8, -9] */
+            for (int i = 0; i < 10; i++)
+            {
+                int *val = (int *)malloc(sizeof(int));
+                *val = pow(-1, i) * i;
+                vector_add(v, (void *)val);
+            }
+
+            it("should have sorted the values")
+            {
+                vector *v_sorted = vector_sort_shell(v, sizeof(int), &cmp_func);
+
+                vector_free(v);
+                v = v_sorted;
+
+                int correct_vals[] = {-9, -7, -5, -3, -1, 0, 2, 4, 6, 8};
+
+                for (int i = 0; i < 10; i++)
+                {
+                    stored_val = *(int *)vector_get(v, i);
+
+                    check(stored_val == correct_vals[i],
+                          "Incorrect value at index %i", i);
+                }
+
+                vector_free(v_sorted);
+            }
+        }
+    }
 }
