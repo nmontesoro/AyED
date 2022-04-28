@@ -234,7 +234,7 @@ spec("vector_sort")
         }
     }
 
-        describe("vector_sort_shell")
+    describe("vector_sort_shell")
     {
         context("when v is NULL")
         {
