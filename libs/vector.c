@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>   // for floor
 #include <string.h> // for memcpy
 #include "vector.h"
 
@@ -290,6 +291,48 @@ vector *vector_sort_selection(const vector *v, int data_size,
             data = vector_remove(copy, i + index);
             vector_insert(copy, i, data);
             vector_free(subset_vector);
+        }
+    }
+
+    return copy;
+}
+
+vector *vector_sort_shell(const vector *v, int data_size, int (*cmp_func)(void *, void *))
+{
+    /* See https://startutorial.com/view/data-structure-and-algorithm-shell-sort */
+
+    vector *copy = NULL;
+    void *data = NULL;
+    int size = 0,
+        gap = 0,
+        comparison = 0,
+        i = 0,
+        iteration = 1;
+
+    if (v && data_size > 0 && cmp_func)
+    {
+        copy = vector_copy(v, data_size, 0, -1);
+        size = vector_size(v);
+        gap = (int)floor(size / (2 * iteration));
+
+        while (gap > 0)
+        {
+            i = 0;
+            while (i < size - gap)
+            {
+                comparison = (*cmp_func)(vector_get(copy, i),
+                                         vector_get(copy, i + gap));
+
+                if (comparison == 1)
+                {
+                    data = copy->a[i];
+                    copy->a[i] = copy->a[i + gap];
+                    copy->a[i + gap] = data;
+                }
+
+                i++;
+            }
+            gap = (int)floor(size / (2 * ++iteration));
         }
     }
 

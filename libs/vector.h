@@ -152,4 +152,15 @@ vector *vector_sort_bubble(const vector *v, int data_size, int (*cmp_func)(void 
  */
 vector *vector_sort_selection(const vector *v, int data_size, int (*cmp_func)(void **, int));
 
+/**
+ * @brief Sorts a vector using the shell sort algorithm
+ * @param v Vector
+ * @param data_size Size (in bytes) of each item in the vector
+ * @param cmp_func A function to use as comparison. Must take two
+ * parameters, a and b, and return 0 if a == b, -1 if a < b or 1
+ * if a > b
+ * @return A new, sorted vector
+ */
+vector *vector_sort_shell(const vector *v, int data_size, int (*cmp_func)(void *, void *));
+
 #endif
