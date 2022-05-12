@@ -22,3 +22,15 @@ btnode *bt_find(btnode *node, int (*cmpfunc)(btnode *node));
  * @return A pointer to the new node.
  */
 btnode *bt_node_new(void *data);
+
+/**
+ * @brief Inserts a node in a tree
+ * @param node Root of the tree
+ * @param new New node
+ * @param cmpfunc A function that takes the current node as a parameter
+ * and returns 0 if its value is equal to the one sought, -1 if it's
+ * less, or 1 if it's greater.
+ * @return 0 if something failed, 1 if the insertion was successful, or
+ * 2 if the value was already in the tree.
+ */
+int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *node));
