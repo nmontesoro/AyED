@@ -104,3 +104,33 @@ btnode *bt_delete_node(btnode *node, int (*cmpfunc)(btnode *node))
     aux->left = NULL;
     return aux;
 }
+
+void bt_traverse(btnode *root, void (*callback)(btnode *node), int order)
+{
+    if (root)
+    {
+        switch (order)
+        {
+        case TRAVERSE_PREORDER:
+            (*callback)(root);
+            bt_traverse(root->left, callback, order);
+            bt_traverse(root->right, callback, order);
+            break;
+
+        case TRAVERSE_INORDER:
+            bt_traverse(root->left, callback, order);
+            (*callback)(root);
+            bt_traverse(root->right, callback, order);
+            break;
+
+        case TRAVERSE_POSTORDER:
+            bt_traverse(root->left, callback, order);
+            bt_traverse(root->right, callback, order);
+            (*callback)(root);
+            break;
+
+        default:
+            break;
+        }
+    }
+}
