@@ -34,3 +34,17 @@ btnode *bt_find(btnode *node, int (*cmpfunc)(btnode *node))
 
     return result;
 }
+
+btnode *bt_node_new(void *data)
+{
+    btnode *new_node = (btnode *)malloc(sizeof(btnode));
+
+    if (new_node)
+    {
+        new_node->data = data;
+        new_node->left = NULL;
+        new_node->right = NULL;
+    }
+
+    return new_node;
+}

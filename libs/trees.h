@@ -14,3 +14,11 @@ typedef struct _btnode
  * @return A pointer to the node, or NULL if it could not be found.
  */
 btnode *bt_find(btnode *node, int (*cmpfunc)(btnode *node));
+
+/**
+ * @brief Creates a new node (duh!)
+ * @param data A pointer to the data that needs to be stored in the
+ * node.
+ * @return A pointer to the new node.
+ */
+btnode *bt_node_new(void *data);
