@@ -34,3 +34,10 @@ btnode *bt_node_new(void *data);
  * 2 if the value was already in the tree.
  */
 int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *node));
+
+/**
+ * @brief Checks if a given node has no children.
+ * @param node The node.
+ * @return 0 if the node is NOT empty, 1 if it is.
+ */
+int bt_node_is_empty(btnode *node);

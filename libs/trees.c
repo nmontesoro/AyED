@@ -89,3 +89,8 @@ int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *node))
 
     return result;
 }
+
+int bt_node_is_empty(btnode *node)
+{
+    return !(node->left || node->right);
+}
