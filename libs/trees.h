@@ -41,3 +41,13 @@ int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *node));
  * @return 0 if the node is NOT empty, 1 if it is.
  */
 int bt_node_is_empty(btnode *node);
+
+/**
+ * @brief Deletes a node from a tree
+ * @param node The node to be deleted
+ * @param cmpfunc A function that takes the current node as a parameter
+ * and returns 0 if its value is equal to the one sought, -1 if it's
+ * less, or 1 if it's greater.
+ * @return A pointer to the newly deleted node.
+ */
+btnode *bt_delete_node(btnode *node, int (*cmpfunc)(btnode *node));

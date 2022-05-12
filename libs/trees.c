@@ -94,3 +94,13 @@ int bt_node_is_empty(btnode *node)
 {
     return !(node->left || node->right);
 }
+
+btnode *bt_delete_node(btnode *node, int (*cmpfunc)(btnode *node))
+{
+    btnode *aux = node;
+    bt_insert(&(aux->right), aux->right, cmpfunc);
+    node = aux->right;
+    aux->right = NULL;
+    aux->left = NULL;
+    return aux;
+}
