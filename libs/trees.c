@@ -49,7 +49,7 @@ btnode *bt_node_new(void *data)
     return new_node;
 }
 
-int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *node))
+int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *a, btnode *b))
 {
     int result = 0;
 
@@ -58,10 +58,11 @@ int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *node))
         if (!*node)
         {
             *node = new;
+            result = 1;
         }
         else
         {
-            switch ((*cmpfunc)(*node))
+            switch ((*cmpfunc)(*node, new))
             {
             case 0:
                 /* Both are equal */
@@ -69,13 +70,13 @@ int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *node))
                 break;
 
             case 1:
-                /* Current node is greater than the one sought */
-                result = bt_insert(&((*node)->right), new, cmpfunc);
+                /* Newer node is greater */
+                result = bt_insert(&((*node)->left), new, cmpfunc);
                 break;
 
             case -1:
-                /* Current node is less than the one sought */
-                result = bt_insert(&((*node)->left), new, cmpfunc);
+                /* Newer node is lower */
+                result = bt_insert(&((*node)->right), new, cmpfunc);
                 break;
 
             default:
@@ -95,7 +96,7 @@ int bt_node_is_empty(btnode *node)
     return !(node->left || node->right);
 }
 
-btnode *bt_delete_node(btnode *node, int (*cmpfunc)(btnode *node))
+btnode *bt_delete_node(btnode *node, int (*cmpfunc)(btnode *a, btnode *b))
 {
     btnode *aux = node;
     bt_insert(&(aux->right), aux->right, cmpfunc);

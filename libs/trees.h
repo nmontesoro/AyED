@@ -31,13 +31,12 @@ btnode *bt_node_new(void *data);
  * @brief Inserts a node in a tree
  * @param node Root of the tree
  * @param new New node
- * @param cmpfunc A function that takes the current node as a parameter
- * and returns 0 if its value is equal to the one sought, -1 if it's
- * less, or 1 if it's greater.
+ * @param cmpfunc A function that takes nodes a and b as parameters, and
+ * returns 0 if they're equal, 1 if a > b or -1 if a < b
  * @return 0 if something failed, 1 if the insertion was successful, or
  * 2 if the value was already in the tree.
  */
-int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *node));
+int bt_insert(btnode **node, btnode *new, int (*cmpfunc)(btnode *a, btnode *b));
 
 /**
  * @brief Checks if a given node has no children.
@@ -49,12 +48,11 @@ int bt_node_is_empty(btnode *node);
 /**
  * @brief Deletes a node from a tree
  * @param node The node to be deleted
- * @param cmpfunc A function that takes the current node as a parameter
- * and returns 0 if its value is equal to the one sought, -1 if it's
- * less, or 1 if it's greater.
+ * @param cmpfunc A function that takes nodes a and b as parameters, and
+ * returns 0 if they're equal, 1 if a > b or -1 if a < b
  * @return A pointer to the newly deleted node.
  */
-btnode *bt_delete_node(btnode *node, int (*cmpfunc)(btnode *node));
+btnode *bt_delete_node(btnode *node, int (*cmpfunc)(btnode *a, btnode *b));
 
 /**
  * @brief Calls a function for every element in the tree.
