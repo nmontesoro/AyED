@@ -180,6 +180,10 @@ int _btn_height(btn *node, int height)
                           _btn_height(node->right, height + 1));
         }
     }
+    else
+    {
+        result = -1;
+    }
 
     return result;
 }
