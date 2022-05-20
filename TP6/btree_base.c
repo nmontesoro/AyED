@@ -93,10 +93,12 @@ int btn_insert(btn **node, btn *newNode)
             if (!((*node)->left))
             {
                 (*node)->left = newNode;
+                result = 1;
             }
             else if (!((*node)->right))
             {
                 (*node)->right = newNode;
+                result = 1;
             }
             else
             {
@@ -105,11 +107,11 @@ int btn_insert(btn **node, btn *newNode)
 
                 if (lcnt <= rcnt)
                 {
-                    btn_insert(&((*node)->left), newNode);
+                    result = btn_insert(&((*node)->left), newNode);
                 }
                 else if (rcnt < lcnt)
                 {
-                    btn_insert(&((*node)->right), newNode);
+                    result = btn_insert(&((*node)->right), newNode);
                 }
             }
         }
