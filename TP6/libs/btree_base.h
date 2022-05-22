@@ -1,3 +1,6 @@
+#ifndef BTREE_BASE
+#define BTREE_BASE
+
 /**************************************************************/
 /*                       NOMENCLATURAS                        */
 /**************************************************************/
@@ -94,7 +97,7 @@ int btn_level(btn *root, t_elem_btree value, int cmp(t_elem_btree, t_elem_btree)
  * Devuelve el valor máximo entre 2 enteros.
  * Función auxiliar utilizada en height.
  */
-//int _max(int a, int b);
+// int _max(int a, int b);
 
 /**
  * Devuelve la altura de un BTN
@@ -130,3 +133,5 @@ int _btn_print(btn *tree, int is_left, int offset, int depth, char s[20][255], v
  * (Los valores de los nodos deben estar entre 0 y 999).
  */
 void btn_print(btn *tree, void toStr(btn *, char *));
+
+#endif
