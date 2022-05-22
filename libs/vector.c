@@ -338,3 +338,80 @@ vector *vector_sort_shell(const vector *v, int data_size, int (*cmp_func)(void *
 
     return copy;
 }
+
+void merge(const vector *v, int data_size, int (*cmp_func)(void *, void *),
+           int start_index, int mid_index, int last_index)
+{
+    int i = 0,
+        j = 0,
+        k = start_index,
+        comparison = 0,
+        size_L = mid_index - start_index + 1,
+        size_R = last_index - mid_index;
+
+    void *L[size_L],
+        *R[size_R];
+
+    for (i = start_index; i <= mid_index; i++)
+    {
+        L[i - start_index] = v->a[i];
+    }
+    for (j = mid_index + 1; j <= last_index; j++)
+    {
+        R[j - mid_index - 1] = v->a[j];
+    }
+
+    i = 0;
+    j = 0;
+    while (i < size_L && j < size_R)
+    {
+        comparison = (*cmp_func)(L[i], R[j]);
+
+        if (comparison == -1 || comparison == 0)
+        {
+            v->a[k++] = L[i++];
+        }
+        else
+        {
+            v->a[k++] = R[j++];
+        }
+    }
+    while (i < size_L)
+    {
+        v->a[k++] = L[i++];
+    }
+    while (j < size_R)
+    {
+        v->a[k++] = R[j++];
+    }
+}
+
+void merge_helper(const vector *v, int data_size,
+                  int (*cmp_func)(void *, void *), int start_index, int last_index)
+{
+    int mid_index = 0;
+
+    if (start_index < last_index)
+    {
+        mid_index = (int)floor((start_index + last_index) / 2);
+        merge_helper(v, data_size, cmp_func, start_index, mid_index);
+        merge_helper(v, data_size, cmp_func, mid_index + 1, last_index);
+        merge(v, data_size, cmp_func, start_index, mid_index, last_index);
+    }
+}
+
+vector *vector_sort_merge(const vector *v, int data_size,
+                          int (*cmp_func)(void *, void *))
+{
+    vector *copy = (vector *)NULL;
+    int size = 0;
+
+    if (v && data_size > 0 && cmp_func)
+    {
+        copy = vector_copy(v, data_size, 0, -1);
+        size = vector_size(copy);
+        merge_helper(copy, data_size, cmp_func, 0, size - 1);
+    }
+
+    return copy;
+}

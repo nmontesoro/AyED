@@ -163,4 +163,6 @@ vector *vector_sort_selection(const vector *v, int data_size, int (*cmp_func)(vo
  */
 vector *vector_sort_shell(const vector *v, int data_size, int (*cmp_func)(void *, void *));
 
+vector *vector_sort_merge(const vector *v, int data_size, int (*cmp_func)(void *, void *));
+
 #endif
