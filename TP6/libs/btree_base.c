@@ -5,7 +5,7 @@
 
 btn *btn_new(t_elem_btree value)
 {
-    btn *node = malloc(sizeof(btn));
+    btn *node = (btn *)malloc(sizeof(btn));
 
     if (node)
     {
