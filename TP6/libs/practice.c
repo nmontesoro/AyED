@@ -38,8 +38,7 @@ void check_tree_helper(btn *node, void *ctx)
 {
     if (!btn_isLeaf(node))
     {
-        int sum = tree_sum(node);
-        *(int *)ctx = *(int *)ctx && (sum == node->value << 1);
+        *(int *)ctx &= (tree_sum(node) == node->value << 1);
     }
 }
 
