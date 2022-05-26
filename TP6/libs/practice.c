@@ -33,3 +33,21 @@ int tree_sum(btn *root)
 
     return result;
 }
+
+void check_tree_helper(btn *node, void *ctx)
+{
+    if (!btn_isLeaf(node))
+    {
+        int sum = tree_sum(node);
+        *(int *)ctx = *(int *)ctx && (sum == node->value << 1);
+    }
+}
+
+int check_tree(btn *root)
+{
+    int result = 1;
+
+    btn_postorder(root, check_tree_helper, (void *)&result);
+
+    return result;
+}
