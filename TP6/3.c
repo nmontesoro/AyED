@@ -29,6 +29,10 @@ btn *create_tree()
 
 void tree_sum_helper(btn *node, void *ctx)
 {
+    /* En este caso ctx es un puntero a int, declarado en la función
+     * tree_sum, que inicialmente tiene valor 0.
+     */
+
     *(int *)ctx += node->value;
 }
 
@@ -36,6 +40,9 @@ int tree_sum(btn *root)
 {
     int result = 0;
 
+    /* Lo hago con postorder, pero podría hacerlo con preorder o inorder
+     * sin problemas.
+     */
     btn_postorder(root, tree_sum_helper, (void *)&result);
 
     return result;
