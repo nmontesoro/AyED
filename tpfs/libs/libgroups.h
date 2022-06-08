@@ -90,4 +90,12 @@ bool user_in_group(group_t *group, user_t *user);
  */
 group_t *group_list_get_by_name(const list_t *list, const char *name);
 
+/**
+ * @brief Returns a pointer to a group whose id matches a value
+ * @param list A pointer to a list of groups
+ * @param id The id to look for
+ * @return A pointer to the group, or NULL if it could not be found
+ */
+group_t *group_list_get_by_id(const list_t *list, uint8_t id);
+
 #endif
