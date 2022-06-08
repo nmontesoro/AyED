@@ -153,3 +153,28 @@ user_t *user_list_get_by_name(const list_t *list, const char *name)
     return user;
 }
 
+user_t *user_list_get_by_id(const list_t *list, uint8_t id)
+{
+    user_t *user = NULL;
+    _list_node_t *current_node = NULL;
+
+    if (list)
+    {
+        current_node = list->head;
+
+        while (current_node)
+        {
+            if (id == ((user_t *)current_node->value)->user_id)
+            {
+                user = (user_t *)current_node->value;
+                current_node = NULL;
+            }
+            else
+            {
+                current_node = current_node->next;
+            }
+        }
+    }
+
+    return user;
+}

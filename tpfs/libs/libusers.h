@@ -84,4 +84,12 @@ bool user_set_password(user_t *user, char *password);
  */
 user_t *user_list_get_by_name(const list_t *list, const char *name);
 
+/**
+ * @brief Returns a pointer to a user whose id matches a value
+ * @param list A pointer to a list of users
+ * @param id The id to look for
+ * @return A pointer to the user, or NULL if it could not be found
+ */
+user_t *user_list_get_by_id(const list_t *list, uint8_t id);
+
 #endif
