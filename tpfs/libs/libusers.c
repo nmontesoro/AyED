@@ -163,9 +163,9 @@ user_t *user_list_get_by_id(const list_t *list, uint8_t id)
     return user;
 }
 
-void _user_list_free_helper(void *user, void *ctx)
+void _user_list_free_helper(_list_node_t *node, void *ctx)
 {
-    *(bool *)ctx &= user_free((user_t *)user);
+    *(bool *)ctx &= user_free((user_t *)node->value);
 }
 
 bool user_list_free(list_t *list)
