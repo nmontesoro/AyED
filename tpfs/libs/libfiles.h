@@ -164,4 +164,13 @@ file_t *file_list_get_by_name(const list_t *list, const char *name);
  */
 list_t *file_list_get_by_owner_id(const list_t *list, uint8_t owner_id);
 
+/**
+ * @brief Finds the files in the list whose group_id matches a parameter
+ * @param list The list of files
+ * @param group_id The group_id to look for
+ * @return A new list of files (remember to call list_free on it, but do
+ * not free the individual files!)
+ */
+list_t *file_list_get_by_group_id(const list_t *list, uint8_t group_id);
+
 #endif

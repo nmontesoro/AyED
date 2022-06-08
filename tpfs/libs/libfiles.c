@@ -294,3 +294,13 @@ list_t *file_list_get_by_owner_id(const list_t *list, uint8_t owner_id)
 {
     return list_find_all(list, &owner_id, _file_list_get_by_owner_id_helper);
 }
+
+bool _file_list_get_by_group_id_helper(void *file, void *id)
+{
+    return (*(uint8_t *)id == ((file_t *)file)->group_id);
+}
+
+list_t *file_list_get_by_group_id(const list_t *list, uint8_t group_id)
+{
+    return list_find_all(list, &group_id, _file_list_get_by_group_id_helper);
+}
