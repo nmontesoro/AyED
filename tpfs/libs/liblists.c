@@ -306,3 +306,30 @@ void *list_find(const list_t *list, void *ctx, bool cmp(void *val, void *ctx))
 
     return item;
 }
+
+list_t *list_find_all(const list_t *list, void *ctx,
+                      bool cmp(void *val, void *ctx))
+{
+    list_t *new_list = NULL;
+    _list_node_t *current_node = NULL;
+
+    if (list && cmp)
+    {
+        if ((new_list = list_new(list->max_size)))
+        {
+            current_node = list->head;
+
+            while (current_node)
+            {
+                if (cmp(current_node->value, ctx))
+                {
+                    list_append(new_list, current_node->value);
+                }
+                
+                current_node = current_node->next;
+            }
+        }
+    }
+
+    return new_list;
+}

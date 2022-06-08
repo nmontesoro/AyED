@@ -144,4 +144,14 @@ bool list_free(list_t *list);
  */
 void *list_find(const list_t *list, void *ctx, bool cmp(void *val, void *ctx));
 
+/**
+ * @brief Finds all the items in the list that match some criteria
+ * @param list The list
+ * @param ctx An optional pointer to context (can be NULL)
+ * @param cmp Function that returns true when the criteria have been met
+ * @return A pointer to a new list
+ */
+list_t *list_find_all(const list_t *list, void *ctx,
+                      bool cmp(void *val, void *ctx));
+
 #endif
