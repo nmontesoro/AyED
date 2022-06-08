@@ -101,7 +101,7 @@ void *list_remove_at(list_t *list, uint32_t index);
  * @param _free A function to free the memory taken up by the value
  * @return The number of removals made
  */
-uint32_t *list_remove(list_t *list, void *ctx, bool cmp(void *val, void *ctx),
+uint32_t list_remove(list_t *list, void *ctx, bool cmp(void *val, void *ctx),
                       void _free(void *val));
 
 /**

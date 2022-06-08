@@ -223,7 +223,7 @@ void *list_remove_at(list_t *list, uint32_t index)
     return removed_value;
 }
 
-uint32_t *list_remove(list_t *list, void *ctx, bool cmp(void *val, void *ctx),
+uint32_t list_remove(list_t *list, void *ctx, bool cmp(void *val, void *ctx),
                       void _free(void *val))
 {
     /* TODO: Rewrite to only go through the list once */
