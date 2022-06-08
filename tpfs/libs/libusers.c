@@ -126,3 +126,30 @@ bool user_set_password(user_t *user, char *password)
 
     return result;
 }
+
+user_t *user_list_get_by_name(const list_t *list, const char *name)
+{
+    user_t *user = NULL;
+    _list_node_t *current_node = NULL;
+
+    if (list && name)
+    {
+        current_node = list->head;
+
+        while (current_node)
+        {
+            if (strcmp(name, ((user_t *)current_node->value)->name) == 0)
+            {
+                user = (user_t *)current_node->value;
+                current_node = NULL;
+            }
+            else
+            {
+                current_node = current_node->next;
+            }
+        }
+    }
+
+    return user;
+}
+

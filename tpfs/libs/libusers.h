@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#include "liblists.h"
+
 typedef struct _user_t
 {
     uint8_t user_id;
@@ -73,5 +75,13 @@ char *user_get_password(user_t *user);
  * @return True or false, depending on the result of the operation
  */
 bool user_set_password(user_t *user, char *password);
+
+/**
+ * @brief Returns a pointer to a user whose name matches a string
+ * @param list A pointer to a list of users
+ * @param name A NULL-terminated string containing the name to look for
+ * @return A pointer to the user, or NULL if it could not be found
+ */
+user_t *user_list_get_by_name(const list_t *list, const char *name);
 
 #endif
