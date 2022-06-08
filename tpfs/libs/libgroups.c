@@ -229,3 +229,20 @@ void group_traverse(const group_t *group, void *ctx,
         list_traverse(group->users, ctx, callback);
     }
 }
+
+void _groups_list_free_helper(_list_node_t *node, void *ctx)
+{
+    *(bool *)ctx &= group_free((group_t *)node->value);
+}
+
+bool groups_list_free(list_t *list)
+{
+    bool result = true;
+
+    if (list)
+    {
+        list_traverse(list, &result, _groups_list_free_helper);
+    }
+
+    return result;
+}
