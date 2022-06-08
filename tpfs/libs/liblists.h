@@ -142,6 +142,6 @@ bool list_free(list_t *list);
  * @param cmp Function that returns true when the criteria have been met
  * @return (void)
  */
-void *list_find(list_t *list, void *ctx, bool cmp(void *val, void *ctx));
+void *list_find(const list_t *list, void *ctx, bool cmp(void *val, void *ctx));
 
 #endif

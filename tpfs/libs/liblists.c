@@ -281,7 +281,7 @@ bool list_free(list_t *list)
     return result;
 }
 
-void *list_find(list_t *list, void *ctx, bool cmp(void *val, void *ctx))
+void *list_find(const list_t *list, void *ctx, bool cmp(void *val, void *ctx))
 {
     void *item = NULL;
     _list_node_t *current_node = NULL;
