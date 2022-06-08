@@ -28,6 +28,7 @@ bool group_free(group_t *group)
 
     if (group && list_free(group->users))
     {
+        group->users = NULL;
         free(group->name);
         group->name = NULL;
         free(group);
@@ -233,6 +234,7 @@ void group_traverse(const group_t *group, void *ctx,
 void _groups_list_free_helper(_list_node_t *node, void *ctx)
 {
     *(bool *)ctx &= group_free((group_t *)node->value);
+    node->value = NULL;
 }
 
 bool groups_list_free(list_t *list)

@@ -348,6 +348,7 @@ bool file_list_free(list_t *list)
         result = true;
         list_traverse(list, &result, _file_list_free_helper);
         list_free(list);
+        list = NULL;
     }
 
     return result;
