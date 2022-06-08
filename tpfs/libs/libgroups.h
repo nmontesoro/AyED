@@ -98,4 +98,12 @@ group_t *group_list_get_by_name(const list_t *list, const char *name);
  */
 group_t *group_list_get_by_id(const list_t *list, uint8_t id);
 
+/**
+ * @brief Returns the member of the group whose id matches a parameter
+ * @param group The group
+ * @param id The id of the user
+ * @return A pointer to the user, or NULL if it could not be found
+ */
+user_t *group_get_member_by_id(const group_t *group, uint8_t id);
+
 #endif

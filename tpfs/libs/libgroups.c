@@ -196,3 +196,15 @@ group_t *group_list_get_by_id(const list_t *list, uint8_t id)
 
     return group;
 }
+
+user_t *group_get_member_by_id(const group_t *group, uint8_t id)
+{
+    user_t *user = NULL;
+
+    if (group)
+    {
+        user = user_list_get_by_id(group->users, id);
+    }
+
+    return user;
+}
