@@ -208,3 +208,15 @@ user_t *group_get_member_by_id(const group_t *group, uint8_t id)
 
     return user;
 }
+
+user_t *group_get_member_by_name(const group_t *group, const char *name)
+{
+    user_t *user = NULL;
+
+    if (group)
+    {
+        user = user_list_get_by_name(group->users, name);
+    }
+
+    return user;
+}
