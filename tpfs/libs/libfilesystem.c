@@ -368,6 +368,7 @@ bool fs_remove_user(filesystem_t *fs, char *name)
                 /* Free the memory allocated to the user */
                 user_free(user);
                 user = NULL;
+                result = true;
             }
             else
             {
