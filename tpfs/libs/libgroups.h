@@ -132,4 +132,11 @@ void group_traverse(const group_t *group, void *ctx,
  */
 bool groups_list_free(list_t *list);
 
+/**
+ * @brief Returns a list with all the members belonging to a group
+ * @param group The group
+ * @return A pointer to a list of user_t
+ */
+list_t *group_get_members(const group_t *group);
+
 #endif

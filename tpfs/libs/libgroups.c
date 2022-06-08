@@ -246,3 +246,15 @@ bool groups_list_free(list_t *list)
 
     return result;
 }
+
+list_t *group_get_members(const group_t *group)
+{
+    list_t *list = NULL;
+
+    if (group)
+    {
+        list = group->users;
+    }
+
+    return list;
+}
