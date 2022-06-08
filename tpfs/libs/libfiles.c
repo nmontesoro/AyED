@@ -284,3 +284,21 @@ file_t *file_list_get_by_name(const list_t *list, const char *name)
 
     return file;
 }
+
+bool _file_list_get_by_owner_id_helper(void *file, void *id)
+{
+    return (*(uint8_t *)id == ((file_t *)file)->owner_id);
+}
+
+file_t *file_list_get_by_owner_id(const list_t *list, uint8_t id)
+{
+    file_t *file = NULL;
+
+    if (list)
+    {
+        file = (file_t *)list_find(list, (void *)&id,
+                                   _file_list_get_by_owner_id_helper);
+    }
+
+    return file;
+}
