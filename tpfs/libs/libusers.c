@@ -127,53 +127,37 @@ bool user_set_password(user_t *user, char *password)
     return result;
 }
 
+bool _user_list_get_by_name_helper(void *user, void *ctx)
+{
+    return (strcmp((char *)ctx, ((user_t *)user)->name) == 0);
+}
+
 user_t *user_list_get_by_name(const list_t *list, const char *name)
 {
     user_t *user = NULL;
-    _list_node_t *current_node = NULL;
 
     if (list && name)
     {
-        current_node = list->head;
-
-        while (current_node)
-        {
-            if (strcmp(name, ((user_t *)current_node->value)->name) == 0)
-            {
-                user = (user_t *)current_node->value;
-                current_node = NULL;
-            }
-            else
-            {
-                current_node = current_node->next;
-            }
-        }
+        user = (user_t *)list_find(list, (void *)name,
+                                   _user_list_get_by_name_helper);
     }
 
     return user;
 }
 
+bool _user_list_get_by_id_helper(void *user, void *id)
+{
+    return (*(uint8_t *)id == ((user_t *)user)->user_id);
+}
+
 user_t *user_list_get_by_id(const list_t *list, uint8_t id)
 {
     user_t *user = NULL;
-    _list_node_t *current_node = NULL;
 
     if (list)
     {
-        current_node = list->head;
-
-        while (current_node)
-        {
-            if (id == ((user_t *)current_node->value)->user_id)
-            {
-                user = (user_t *)current_node->value;
-                current_node = NULL;
-            }
-            else
-            {
-                current_node = current_node->next;
-            }
-        }
+        user = (user_t *)list_find(list, (void *)&id,
+                                   _user_list_get_by_id_helper);
     }
 
     return user;
