@@ -266,3 +266,21 @@ file_t *file_copy(const file_t *file)
 
     return new_file;
 }
+
+bool _file_list_get_by_name_helper(void *file, void *ctx)
+{
+    return (strcmp((char *)ctx, ((file_t *)file)->name) == 0);
+}
+
+file_t *file_list_get_by_name(const list_t *list, const char *name)
+{
+    file_t *file = NULL;
+
+    if (list && name)
+    {
+        file = (file_t *)list_find(list, (void *)name,
+                                   _file_list_get_by_name_helper);
+    }
+
+    return file;
+}

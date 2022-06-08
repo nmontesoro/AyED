@@ -6,6 +6,7 @@
 #include <time.h>
 
 #include "libpermissions.h"
+#include "liblists.h"
 
 typedef struct _file_t
 {
@@ -144,5 +145,14 @@ bool file_can(const file_t *file, const uint16_t permissions);
  * @return A copy of the file, or NULL if something failed
  */
 file_t *file_copy(const file_t *file);
+
+/**
+ * @brief Finds the file in the list whose name matches a 
+ * NULL-terminated string
+ * @param list The list of files
+ * @param name The name of the file sought
+ * @return A pointer to the file, or NULL if it could not be found
+ */
+file_t *file_list_get_by_name(const list_t *list, const char *name);
 
 #endif
