@@ -39,16 +39,22 @@ bool file_free(file_t *file)
 
     if (file)
     {
-        free(file->name);
-        file->name = NULL;
+        if (file->is_directory)
+        {
+            result = file_list_free((list_t *)file->contents);
+        }
+        else
+        {
+            free(file->name);
+            file->name = NULL;
 
-        free(file->contents);
-        file->contents = NULL;
+            free(file->contents);
+            file->contents = NULL;
 
-        free(file);
-        file = NULL;
-
-        result = true;
+            free(file);
+            file = NULL;
+            result = true;
+        }
     }
 
     return result;
@@ -329,11 +335,6 @@ void _file_list_free_helper(_list_node_t *node, void *ctx)
 {
     file_t *file = (file_t *)node->value;
     bool *result = (bool *)ctx;
-
-    if (file->is_directory)
-    {
-        *result &= file_list_free((list_t *)file->contents);
-    }
 
     *result &= file_free(file);
 }
