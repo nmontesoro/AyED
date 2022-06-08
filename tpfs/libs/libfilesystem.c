@@ -90,6 +90,7 @@ list_t *_init_users()
             if (!list_append(users, (void *)root_usr))
             {
                 list_free(users);
+                free(users);
                 users = NULL;
                 user_free(root_usr);
                 root_usr = NULL;
@@ -129,6 +130,7 @@ list_t *_init_groups(user_t *root_usr)
                 group_free(root_group);
                 root_group = NULL;
                 list_free(groups);
+                free(groups);
                 groups = NULL;
             }
         }
@@ -248,6 +250,7 @@ filesystem_t *fs_new()
         user_list_free(users);
         users = NULL;
         groups_list_free(groups);
+        free(groups);
         groups = NULL;
         file_free(root_dir);
         root_dir = NULL;
@@ -578,6 +581,9 @@ bool fs_create_file(filesystem_t *fs, char *name, const uint16_t permissions,
                 else
                 {
                     _write_message(fs, 4, "Could not add file to directory");
+                    file_free(file);
+                    free(file);
+                    file = NULL;
                 }
             }
             else
@@ -722,11 +728,17 @@ bool fs_create_dir(filesystem_t *fs, char *name, const uint16_t permissions,
                     else
                     {
                         _write_message(fs, 4, "Could not add file to directory");
+                        file_free(file);
+                        free(file);
+                        file = NULL;
                     }
                 }
                 else
                 {
                     _write_message(fs, 5, "Could not create file object");
+                    list_free(contents);
+                    free(contents);
+                    contents = NULL;
                 }
             }
             else
