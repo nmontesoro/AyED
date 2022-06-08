@@ -139,4 +139,12 @@ bool groups_list_free(list_t *list);
  */
 list_t *group_get_members(const group_t *group);
 
+/**
+ * @brief Removes every instance of user from every group in the list
+ * @param groups A pointer to the list of groups
+ * @param user A pointer to the user
+ * @return (void)
+ */
+void group_list_remove_member(list_t *groups, user_t *user);
+
 #endif

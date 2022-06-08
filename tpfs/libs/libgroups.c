@@ -260,3 +260,16 @@ list_t *group_get_members(const group_t *group)
 
     return list;
 }
+
+void _group_list_remove_member_helper(_list_node_t *node, void *ctx)
+{
+    list_remove(((group_t *)node->value)->users, ctx, POINTERS_MATCH, NULLF);
+}
+
+void group_list_remove_member(list_t *groups, user_t *user)
+{
+    if (groups && user)
+    {
+        list_traverse(groups, user, _group_list_remove_member_helper);
+    }
+}
