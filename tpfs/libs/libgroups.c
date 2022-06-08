@@ -144,3 +144,30 @@ bool user_in_group(group_t *group, user_t *user)
 
     return result;
 }
+
+group_t *group_list_get_by_name(const list_t *list, const char *name)
+{
+    group_t *group = NULL;
+    _list_node_t *current_node = NULL;
+
+    if (list && name)
+    {
+        current_node = list->head;
+
+        while (current_node)
+        {
+            if (strcmp(name, ((group_t *)current_node->value)->name) == 0)
+            {
+                group = (group_t *)current_node->value;
+                current_node = NULL;
+            }
+            else
+            {
+                current_node = current_node->next;
+            }
+        }
+    }
+
+    return group;
+}
+

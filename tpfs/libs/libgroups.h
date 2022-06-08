@@ -82,4 +82,12 @@ bool group_remove_user(group_t *group, user_t *user);
  */
 bool user_in_group(group_t *group, user_t *user);
 
+/**
+ * @brief Returns a pointer to a group whose name matches a string
+ * @param list A pointer to a list of groups
+ * @param name A NULL-terminated string containing the name to look for
+ * @return A pointer to the group, or NULL if it could not be found
+ */
+group_t *group_list_get_by_name(const list_t *list, const char *name);
+
 #endif
