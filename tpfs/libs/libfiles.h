@@ -156,11 +156,12 @@ file_t *file_copy(const file_t *file);
 file_t *file_list_get_by_name(const list_t *list, const char *name);
 
 /**
- * @brief Finds the file in the list whose owner_id matches a parameter
+ * @brief Finds the files in the list whose owner_id matches a parameter
  * @param list The list of files
  * @param owner_id The owner_id to look for
- * @return A pointer to the file, or NULL if it could not be found
+ * @return A new list of files (remember to call list_free on it, but do
+ * not free the individual files!)
  */
-file_t *file_list_get_by_owner_id(const list_t *list, const uint8_t owner_id);
+list_t *file_list_get_by_owner_id(const list_t *list, uint8_t owner_id);
 
 #endif
