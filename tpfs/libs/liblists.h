@@ -102,7 +102,7 @@ void *list_remove_at(list_t *list, uint32_t index);
  * @return The number of removals made
  */
 uint32_t list_remove(list_t *list, void *ctx, bool cmp(void *val, void *ctx),
-                      void _free(void *val));
+                     void _free(void *val));
 
 /**
  * @brief Calls a function for each item in the list
