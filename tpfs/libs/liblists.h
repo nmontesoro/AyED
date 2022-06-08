@@ -140,7 +140,7 @@ bool list_free(list_t *list);
  * @param list The list
  * @param ctx An optional pointer to context (can be NULL)
  * @param cmp Function that returns true when the criteria have been met
- * @return (void)
+ * @return A pointer to the item, or NULL if it could not be found
  */
 void *list_find(const list_t *list, void *ctx, bool cmp(void *val, void *ctx));
 
