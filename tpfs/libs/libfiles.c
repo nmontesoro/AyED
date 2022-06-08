@@ -324,3 +324,30 @@ list_t *file_list_get_files(const list_t *list)
 {
     return list_find_all(list, NULL, _file_list_get_files_helper);
 }
+
+void _file_list_free_helper(_list_node_t *node, void *ctx)
+{
+    file_t *file = (file_t *)node->value;
+    bool *result = (bool *)ctx;
+
+    if (file->is_directory)
+    {
+        *result &= file_list_free((list_t *)file->contents);
+    }
+
+    *result &= file_free(file);
+}
+
+bool file_list_free(list_t *list)
+{
+    bool result = false;
+
+    if (list)
+    {
+        result = true;
+        list_traverse(list, &result, _file_list_free_helper);
+        list_free(list);
+    }
+
+    return result;
+}

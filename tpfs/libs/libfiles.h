@@ -188,4 +188,12 @@ list_t *file_list_get_directories(const list_t *list);
  */
 list_t *file_list_get_files(const list_t *list);
 
+/**
+ * @brief Frees a list of files, and every file contained in every 
+ * directory
+ * @param list The list
+ * @return True or false, depending on the result of the operation
+ */
+bool file_list_free(list_t *list);
+
 #endif
