@@ -231,7 +231,8 @@ uint32_t list_remove(list_t *list, void *ctx, bool cmp(void *val, void *ctx),
     uint32_t removed_count = 0,
              index = 0;
     _list_node_t *current_node = NULL;
-    void *free_node = NULL;
+    void *free_node = NULL,
+         *value = NULL;
 
     if (list && cmp)
     {
@@ -239,7 +240,10 @@ uint32_t list_remove(list_t *list, void *ctx, bool cmp(void *val, void *ctx),
 
         while (current_node)
         {
-            if (cmp(current_node->value, ctx))
+            value = current_node->value;
+            current_node = current_node->next;
+
+            if (cmp(value, ctx))
             {
                 if ((free_node = list_remove_at(list, index)))
                 {
@@ -247,8 +251,7 @@ uint32_t list_remove(list_t *list, void *ctx, bool cmp(void *val, void *ctx),
                     removed_count++;
                 }
             }
-
-            current_node = current_node->next;
+            
             index++;
         }
     }
