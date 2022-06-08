@@ -1,6 +1,9 @@
 #ifndef LIB_LISTS
 #define LIB_LISTS
 
+#define NULLF _nullf //< A function that doesn't do anything
+#define POINTERS_MATCH _ptrs_match //< Returns true when pointers match
+
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -153,5 +156,23 @@ void *list_find(const list_t *list, void *ctx, bool cmp(void *val, void *ctx));
  */
 list_t *list_find_all(const list_t *list, void *ctx,
                       bool cmp(void *val, void *ctx));
+
+/**
+ * @brief A function that doesn't do anything. Useful when we don't 
+ * want to call free for every item in a list
+ * @param var Ignore - it's just here to match the declaration of 
+ * list_remove
+ * @return (void)
+ */
+void _nullf(void *var);
+
+/**
+ * @brief A function that returns true when two pointers match. Useful
+ * for list_traverse
+ * @param val Ignore
+ * @param ctx Ignore
+ * @return True when both pointers match, false otherwise
+ */
+bool _ptrs_match(void *val, void *ctx);
 
 #endif

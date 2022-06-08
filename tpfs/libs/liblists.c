@@ -336,3 +336,10 @@ list_t *list_find_all(const list_t *list, void *ctx,
 
     return new_list;
 }
+
+void _nullf(void *var) {}
+
+bool _ptrs_match(void *val, void *ctx)
+{
+    return (val == ctx);
+}
