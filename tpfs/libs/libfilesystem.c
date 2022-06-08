@@ -515,6 +515,7 @@ bool fs_login(filesystem_t *fs, char *username, char *password)
             if (strcmp(user->password, password) == 0)
             {
                 fs->current_user = user;
+                result = true;
             }
             else
             {
