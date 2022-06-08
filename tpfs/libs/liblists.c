@@ -224,7 +224,7 @@ void *list_remove_at(list_t *list, uint32_t index)
 }
 
 uint32_t list_remove(list_t *list, void *ctx, bool cmp(void *val, void *ctx),
-                      void _free(void *val))
+                     void _free(void *val))
 {
     /* TODO: Rewrite to only go through the list once */
 
@@ -272,11 +272,37 @@ bool list_free(list_t *list)
             free(current_node);
             current_node = NULL;
         }
-        
+
         free(list);
         list = NULL;
         result = true;
     }
 
     return result;
+}
+
+void *list_find(list_t *list, void *ctx, bool cmp(void *val, void *ctx))
+{
+    void *item = NULL;
+    _list_node_t *current_node = NULL;
+
+    if (list && cmp)
+    {
+        current_node = list->head;
+
+        while (current_node)
+        {
+            if (cmp(current_node->value, ctx))
+            {
+                item = current_node->value;
+                current_node = NULL;
+            }
+            else
+            {
+                current_node = current_node->next;
+            }
+        }
+    }
+
+    return item;
 }

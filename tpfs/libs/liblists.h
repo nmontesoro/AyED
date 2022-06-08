@@ -135,4 +135,13 @@ _list_node_t *_list_node_new(void *value, _list_node_t *previous,
  */
 bool list_free(list_t *list);
 
+/**
+ * @brief Finds the item in the list that matches some criteria
+ * @param list The list
+ * @param ctx An optional pointer to context (can be NULL)
+ * @param cmp Function that returns true when the criteria have been met
+ * @return (void)
+ */
+void *list_find(list_t *list, void *ctx, bool cmp(void *val, void *ctx));
+
 #endif
