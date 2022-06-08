@@ -162,3 +162,22 @@ user_t *user_list_get_by_id(const list_t *list, uint8_t id)
 
     return user;
 }
+
+void _user_list_free_helper(void *user, void *ctx)
+{
+    *(bool *)ctx &= user_free((user_t *)user);
+}
+
+bool user_list_free(list_t *list)
+{
+    bool result = true;
+
+    list_traverse(list, &result, _user_list_free_helper);
+
+    if (result)
+    {
+        result &= list_free(list);
+    }
+
+    return result;
+}

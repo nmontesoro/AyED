@@ -92,4 +92,11 @@ user_t *user_list_get_by_name(const list_t *list, const char *name);
  */
 user_t *user_list_get_by_id(const list_t *list, uint8_t id);
 
+/**
+ * @brief Frees a list of users
+ * @param list The list
+ * @return True or false, depending on the result of the operation
+ */
+bool user_list_free(list_t *list);
+
 #endif
