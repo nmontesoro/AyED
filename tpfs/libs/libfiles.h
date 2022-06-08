@@ -181,4 +181,13 @@ list_t *file_list_get_by_group_id(const list_t *list, uint8_t group_id);
  */
 list_t *file_list_get_directories(const list_t *list);
 
+/**
+ * @brief Finds all the files in a list of files (those which are not 
+ * directories)
+ * @param list The list of files
+ * @return A new list of files (remember to call list_free on it, but do
+ * not free the individual files!)
+ */
+list_t *file_list_get_files(const list_t *list);
+
 #endif

@@ -314,3 +314,13 @@ list_t *file_list_get_directories(const list_t *list)
 {
     return list_find_all(list, NULL, _file_list_get_directories_helper);
 }
+
+bool _file_list_get_files_helper(void *file, void *ctx)
+{
+    return !((file_t *)file)->is_directory;
+}
+
+list_t *file_list_get_files(const list_t *list)
+{
+    return list_find_all(list, NULL, _file_list_get_files_helper);
+}
