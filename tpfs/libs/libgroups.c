@@ -220,3 +220,12 @@ user_t *group_get_member_by_name(const group_t *group, const char *name)
 
     return user;
 }
+
+void group_traverse(const group_t *group, void *ctx,
+                    void callback(_list_node_t *user, void *ctx))
+{
+    if (group)
+    {
+        list_traverse(group->users, ctx, callback);
+    }
+}

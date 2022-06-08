@@ -114,4 +114,14 @@ user_t *group_get_member_by_id(const group_t *group, uint8_t id);
  */
 user_t *group_get_member_by_name(const group_t *group, const char *name);
 
+/**
+ * @brief Calls a function for each user in the group
+ * @param group The group
+ * @param ctx An optional pointer to context (can be NULL)
+ * @param callback The function to call
+ * @return (void)
+ */
+void group_traverse(const group_t *group, void *ctx,
+                    void callback(_list_node_t *user, void *ctx));
+
 #endif
