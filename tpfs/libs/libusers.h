@@ -1,8 +1,8 @@
 #ifndef LIB_USERS
 #define LIB_USERS
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #include "liblists.h"
 
@@ -68,7 +68,7 @@ bool user_set_name(user_t *user, char *name);
 char *user_get_password(user_t *user);
 
 /**
- * @brief Sets the password for a user, while freeing the memory taken 
+ * @brief Sets the password for a user, while freeing the memory taken
  * up by the previous password
  * @param user A pointer to the user
  * @param password The new password

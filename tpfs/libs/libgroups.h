@@ -125,7 +125,7 @@ void group_traverse(const group_t *group, void *ctx,
                     void callback(_list_node_t *user, void *ctx));
 
 /**
- * @brief Frees a list of groups. Does NOT free the users within the 
+ * @brief Frees a list of groups. Does NOT free the users within the
  * group
  * @param list The list
  * @return True or false, depending on the result of the operation

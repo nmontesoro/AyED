@@ -325,7 +325,7 @@ list_t *list_find_all(const list_t *list, void *ctx,
                 {
                     list_append(new_list, current_node->value);
                 }
-                
+
                 current_node = current_node->next;
             }
         }

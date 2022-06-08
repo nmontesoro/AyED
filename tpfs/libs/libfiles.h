@@ -1,12 +1,12 @@
 #ifndef LIB_FILES
 #define LIB_FILES
 
-#include <stdint.h>
 #include <stdbool.h>
+#include <stdint.h>
 #include <time.h>
 
-#include "libpermissions.h"
 #include "liblists.h"
+#include "libpermissions.h"
 
 typedef struct _file_t
 {
@@ -126,18 +126,16 @@ void *file_set_contents(file_t *file, const uint32_t size, void *contents);
  */
 void *file_get_contents(const file_t *file);
 
-
 /**
  * @brief Checks if user, group or others have permission to do certain
- * things. For instance, can be used to check whether the user can read 
- * and write by passing USER_READ + USER_WRITE as the value for 
+ * things. For instance, can be used to check whether the user can read
+ * and write by passing USER_READ + USER_WRITE as the value for
  * permissions. Refer to libpermissions.h for possible values.
  * @param file The file
  * @param permissions The permissions to check
  * @return True or false, depending on the result of the operation
  */
 bool file_can(const file_t *file, const uint16_t permissions);
-
 
 /**
  * @brief Creates an exact copy of a file
@@ -147,7 +145,7 @@ bool file_can(const file_t *file, const uint16_t permissions);
 file_t *file_copy(const file_t *file);
 
 /**
- * @brief Finds the file in the list whose name matches a 
+ * @brief Finds the file in the list whose name matches a
  * NULL-terminated string
  * @param list The list of files
  * @param name The name of the file sought
@@ -182,7 +180,7 @@ list_t *file_list_get_by_group_id(const list_t *list, uint8_t group_id);
 list_t *file_list_get_directories(const list_t *list);
 
 /**
- * @brief Finds all the files in a list of files (those which are not 
+ * @brief Finds all the files in a list of files (those which are not
  * directories)
  * @param list The list of files
  * @return A new list of files (remember to call list_free on it, but do
