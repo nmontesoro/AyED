@@ -304,3 +304,13 @@ list_t *file_list_get_by_group_id(const list_t *list, uint8_t group_id)
 {
     return list_find_all(list, &group_id, _file_list_get_by_group_id_helper);
 }
+
+bool _file_list_get_directories_helper(void *file, void *ctx)
+{
+    return ((file_t *)file)->is_directory;
+}
+
+list_t *file_list_get_directories(const list_t *list)
+{
+    return list_find_all(list, NULL, _file_list_get_directories_helper);
+}

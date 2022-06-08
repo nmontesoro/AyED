@@ -173,4 +173,12 @@ list_t *file_list_get_by_owner_id(const list_t *list, uint8_t owner_id);
  */
 list_t *file_list_get_by_group_id(const list_t *list, uint8_t group_id);
 
+/**
+ * @brief Finds all the directories in a list of files
+ * @param list The list of files
+ * @return A new list of files (remember to call list_free on it, but do
+ * not free the individual files!)
+ */
+list_t *file_list_get_directories(const list_t *list);
+
 #endif
