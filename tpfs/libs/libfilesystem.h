@@ -277,7 +277,7 @@ bool fs_remove_file(filesystem_t *fs, file_t *parent_dir, file_t *file);
  * @param source_dir A pointer to the source directory
  * @param dest_dir A pointer to the destination directory
  * @param source A pointer to the source file
- * @return
+ * @return True or false, depending on the result of the operation
  */
 bool fs_move_file(filesystem_t *fs, file_t *source_dir, file_t *dest_dir,
                   file_t *source);
