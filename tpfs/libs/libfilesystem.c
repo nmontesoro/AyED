@@ -698,7 +698,7 @@ void fs_list_dir(filesystem_t *fs, file_t *dir)
     {
         if (dir->is_directory)
         {
-            if (fs_user_can_execute(fs, dir))
+            if (fs_user_can_read(fs, dir))
             {
                 list = (list_t *)dir->contents;
 

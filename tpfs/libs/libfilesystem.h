@@ -184,7 +184,8 @@ void fs_print_groups(filesystem_t *fs, FILE *fp);
 bool fs_current_user_is_admin(filesystem_t *fs);
 
 /**
- * @brief Prints the contents of a directory to stdout
+ * @brief Prints the contents of a directory to stdout (only if current  
+ * user has read permissions)
  * @param fs A pointer to the filesystem
  * @param dir The directory
  * @return (void)
