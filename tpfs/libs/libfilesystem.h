@@ -241,4 +241,13 @@ bool fs_change_user_password(filesystem_t *fs, user_t *user, char *password);
  */
 bool fs_remove_user_from_group(filesystem_t *fs, user_t *user, group_t *group);
 
+/**
+ * @brief If the current user has execute permissions, change the 
+ * current working directory
+ * @param fs A pointer to the filesystem
+ * @param dir A pointer to the directory
+ * @return True or false, depending on the result of the operation
+ */
+bool fs_change_directory(filesystem_t *fs, file_t *dir);
+
 #endif

@@ -839,3 +839,27 @@ bool fs_remove_user_from_group(filesystem_t *fs, user_t *user, group_t *group)
 
     return result;
 }
+
+bool fs_change_directory(filesystem_t *fs, file_t *dir)
+{
+    bool result = false;
+
+    if (fs && dir && dir->is_directory)
+    {
+        if (fs_user_can_execute(fs, dir))
+        {
+            fs->cwd = dir;
+            result = true;
+        }
+        else
+        {
+            _write_message(fs, 2, "Access denied");
+        }
+    }
+    else
+    {
+        _write_message(fs, 1, "Invalid parameters");
+    }
+
+    return result;
+}
