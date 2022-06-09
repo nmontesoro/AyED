@@ -912,3 +912,34 @@ bool fs_copy_file(filesystem_t *fs, file_t *source, file_t *dest_dir)
 
     return result;
 }
+
+bool fs_remove_file(filesystem_t *fs, file_t *parent_dir, file_t *file)
+{
+    bool result = false;
+
+    if (fs && parent_dir && file && parent_dir->is_directory &&
+        !file->is_directory)
+    {
+        if (fs_user_can_modify(fs, parent_dir) && fs_user_can_modify(fs, file))
+        {
+            result = list_remove((list_t *)parent_dir->contents,
+                                 (void *)file, POINTERS_MATCH, NULLF);
+
+            if (!result)
+            {
+                _write_message(fs, 3, "Could not remove file from directory");
+            }
+        }
+        else
+        {
+            _write_message(fs, 2, "Access denied");
+        }
+    }
+    else
+    {
+        _write_message(fs, 1, "Invalid parameters");
+    }
+
+    return result;
+}
+

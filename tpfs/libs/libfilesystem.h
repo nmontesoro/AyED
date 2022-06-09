@@ -260,4 +260,14 @@ bool fs_change_directory(filesystem_t *fs, file_t *dir);
  */
 bool fs_copy_file(filesystem_t *fs, file_t *source, file_t *dest_dir);
 
+/**
+ * @brief If conditions are met, removes a file from the parent 
+ * directory. Does NOT free the file pointer.
+ * @param fs A pointer to the filesystem
+ * @param parent_dir A pointer to the parent directory
+ * @param file A pointer to the file
+ * @return True or false, depending on the result of the operation
+ */
+bool fs_remove_file(filesystem_t *fs, file_t *parent_dir, file_t *file);
+
 #endif
