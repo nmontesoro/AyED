@@ -270,4 +270,16 @@ bool fs_copy_file(filesystem_t *fs, file_t *source, file_t *dest_dir);
  */
 bool fs_remove_file(filesystem_t *fs, file_t *parent_dir, file_t *file);
 
+/**
+ * @brief Checks if conditions are met and then moves a file from
+ * source_dir to dest_dir
+ * @param fs A pointer to the filesystem
+ * @param source_dir A pointer to the source directory
+ * @param dest_dir A pointer to the destination directory
+ * @param source A pointer to the source file
+ * @return
+ */
+bool fs_move_file(filesystem_t *fs, file_t *source_dir, file_t *dest_dir,
+                  file_t *source);
+
 #endif

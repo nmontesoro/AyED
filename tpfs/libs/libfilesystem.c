@@ -943,3 +943,40 @@ bool fs_remove_file(filesystem_t *fs, file_t *parent_dir, file_t *file)
     return result;
 }
 
+bool fs_move_file(filesystem_t *fs, file_t *source_dir, file_t *dest_dir,
+                  file_t *source)
+{
+    bool result = false;
+
+    if (fs && source_dir && dest_dir && source && source_dir->is_directory &&
+        dest_dir->is_directory && !source->is_directory)
+    {
+        if (fs_user_can_modify(fs, dest_dir))
+        {
+            result = fs_remove_file(fs, source_dir, source);
+
+            if (result)
+            {
+                result = list_append((list_t *)dest_dir->contents,
+                                     (void *)source);
+                
+                if (!result)
+                {
+                    /* Attempt to put the file back in its original location */
+                    list_append((list_t *)source_dir->contents, (void *)source);
+                    _write_message(fs, 3, "Could not add file to directory");
+                }
+            }
+        }
+        else
+        {
+            _write_message(fs, 2, "Access denied");
+        }
+    }
+    else
+    {
+        _write_message(fs, 1, "Invalid parameters");
+    }
+
+    return result;
+}
