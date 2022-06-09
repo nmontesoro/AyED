@@ -494,20 +494,27 @@ bool fs_add_user_to_group(filesystem_t *fs, user_t *user, group_t *group)
 
     if (fs && user && group)
     {
-        if (!user_in_group(group, user))
+        if (fs_current_user_is_admin(fs))
         {
-            if (group_add_user(group, user))
+            if (!user_in_group(group, user))
             {
-                result = true;
+                if (group_add_user(group, user))
+                {
+                    result = true;
+                }
+                else
+                {
+                    _write_message(fs, 3, "Could not add user to group");
+                }
             }
             else
             {
-                _write_message(fs, 3, "Could not add user to group");
+                _write_message(fs, 2, "User already belongs to group");
             }
         }
         else
         {
-            _write_message(fs, 2, "User already belongs to group");
+            _write_message(fs, 4, "Not enough permissions");
         }
     }
     else
