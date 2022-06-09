@@ -776,3 +776,31 @@ bool fs_create_dir(filesystem_t *fs, char *name, const uint16_t permissions,
 
     return result;
 }
+
+bool fs_change_user_password(filesystem_t *fs, user_t *user, char *password)
+{
+    bool result = false;
+
+    if (fs && user && password)
+    {
+        if (fs->current_user == user || fs_current_user_is_admin(fs))
+        {
+            result = user_set_password(user, password);
+
+            if (!result)
+            {
+                _write_message(fs, 3, "Could not set password");
+            }
+        }
+        else
+        {
+            _write_message(fs, 2, "Not enough permissions");
+        }
+    }
+    else
+    {
+        _write_message(fs, 1, "Invalid parameters");
+    }
+
+    return result;
+}

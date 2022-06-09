@@ -187,7 +187,7 @@ bool fs_current_user_is_admin(filesystem_t *fs);
  * @brief Prints the contents of a directory to stdout
  * @param fs A pointer to the filesystem
  * @param dir The directory
-  * @return (void)
+ * @return (void)
  */
 void fs_list_dir(filesystem_t *fs, file_t *dir);
 
@@ -219,5 +219,15 @@ bool fs_user_can_execute(filesystem_t *fs, file_t *file);
  */
 bool fs_create_dir(filesystem_t *fs, char *name, const uint16_t permissions,
                    file_t *dir);
+
+/**
+ * @brief Checks that all necessary conditions are met and then changes
+ * a user's password
+ * @param fs A pointer to the filesystem
+ * @param user A pointer to the user whose password is to be changed
+ * @param password A null-terminated string containing the new password
+ * @return True or false, depending on the result of the operation
+ */
+bool fs_change_user_password(filesystem_t *fs, user_t *user, char *password);
 
 #endif
