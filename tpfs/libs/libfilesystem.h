@@ -304,4 +304,14 @@ bool fs_file_change_permissions(filesystem_t *fs, file_t *file,
 bool fs_dir_change_permissions(filesystem_t *fs, file_t *dir,
                                uint16_t permissions);
 
+/**
+ * @brief If conditions are met, changes the contents of a file
+ * @param fs A pointer to the filesystem
+ * @param file A pointer to the file to be modified
+ * @param new_contents A pointer to the new contents of the file
+ * @param new_size The size of the content, in bytes
+ * @return True or false, depending on the result of the operation
+ */
+bool fs_modify_file(filesystem_t *fs, file_t *file, void *new_contents,
+                    uint32_t new_size);
 #endif

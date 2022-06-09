@@ -1010,3 +1010,39 @@ bool fs_dir_change_permissions(filesystem_t *fs, file_t *dir,
 {
     return fs_file_change_permissions(fs, dir, permissions);
 }
+
+bool fs_modify_file(filesystem_t *fs, file_t *file, void *new_contents,
+                    uint32_t new_size)
+{
+    bool result = false;
+    void *previous_contents = NULL;
+
+    if (fs && file && new_contents && !file->is_directory)
+    {
+        if (fs_user_can_modify(fs, file))
+        {
+            previous_contents = file_set_contents(file, new_size, new_contents);
+
+            if (previous_contents)
+            {
+                free(previous_contents);
+                previous_contents = NULL;
+                result = true;
+            }
+            else
+            {
+                _write_message(fs, 3, "Unable to modify file");
+            }
+        }
+        else
+        {
+            _write_message(fs, 2, "Access denied");
+        }
+    }
+    else
+    {
+        _write_message(fs, 1, "Invalid parameters");
+    }
+
+    return result;
+}
