@@ -980,3 +980,27 @@ bool fs_move_file(filesystem_t *fs, file_t *source_dir, file_t *dest_dir,
 
     return result;
 }
+
+bool fs_file_change_permissions(filesystem_t *fs, file_t *file,
+                                uint16_t permissions)
+{
+    bool result = false;
+
+    if (fs && file)
+    {
+        if (fs_user_can_modify(fs, file))
+        {
+            result = file_set_permissions(file, permissions);
+        }
+        else
+        {
+            _write_message(fs, 2, "Access denied");
+        }
+    }
+    else
+    {
+        _write_message(fs, 1, "Invalid parameters");
+    }
+
+    return result;
+}

@@ -282,4 +282,15 @@ bool fs_remove_file(filesystem_t *fs, file_t *parent_dir, file_t *file);
 bool fs_move_file(filesystem_t *fs, file_t *source_dir, file_t *dest_dir,
                   file_t *source);
 
+/**
+ * @brief If conditions are met, changes the permissions of a file
+ * @param fs A pointer to the filesystem
+ * @param file A pointer to the file
+ * @param permissions An integer representing the new permissions (refer
+ * to libpermissions.h)
+ * @return True or false, depending on the result of the operation
+ */
+bool fs_file_change_permissions(filesystem_t *fs, file_t *file,
+                                uint16_t permissions);
+
 #endif
