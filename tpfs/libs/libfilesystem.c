@@ -392,7 +392,7 @@ bool fs_remove_user(filesystem_t *fs, char *name)
     return result;
 }
 
-bool fs_current_user_is_admin(filesystem_t *fs)
+bool fs_user_is_admin(filesystem_t *fs, user_t *user)
 {
     bool result = false;
     group_t *admin_group = NULL;
@@ -400,7 +400,19 @@ bool fs_current_user_is_admin(filesystem_t *fs)
     if (fs)
     {
         admin_group = (group_t *)list_get(fs->groups, 0);
-        result = user_in_group(admin_group, fs->current_user);
+        result = user_in_group(admin_group, user);
+    }
+
+    return result;
+}
+
+bool fs_current_user_is_admin(filesystem_t *fs)
+{
+    bool result = false;
+
+    if (fs)
+    {
+        result = fs_user_is_admin(fs, fs->current_user);
     }
 
     return result;
