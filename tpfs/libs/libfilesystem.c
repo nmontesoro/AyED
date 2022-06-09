@@ -1004,3 +1004,9 @@ bool fs_file_change_permissions(filesystem_t *fs, file_t *file,
 
     return result;
 }
+
+bool fs_dir_change_permissions(filesystem_t *fs, file_t *dir,
+                               uint16_t permissions)
+{
+    return fs_file_change_permissions(fs, dir, permissions);
+}
