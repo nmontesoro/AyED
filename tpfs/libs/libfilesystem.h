@@ -250,4 +250,14 @@ bool fs_remove_user_from_group(filesystem_t *fs, user_t *user, group_t *group);
  */
 bool fs_change_directory(filesystem_t *fs, file_t *dir);
 
+/**
+ * @brief Checks if conditions are met and then copies a file into a
+ * directory
+ * @param fs A pointer to the filesystem
+ * @param source A pointer to the source file
+ * @param dest_dir A pointer to the destination directory
+ * @return True or false, depending on the result of the operation
+ */
+bool fs_copy_file(filesystem_t *fs, file_t *source, file_t *dest_dir);
+
 #endif

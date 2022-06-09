@@ -863,3 +863,52 @@ bool fs_change_directory(filesystem_t *fs, file_t *dir)
 
     return result;
 }
+
+bool fs_copy_file(filesystem_t *fs, file_t *source, file_t *dest_dir)
+{
+    bool result = false;
+    file_t *new_file = NULL;
+
+    if (fs && source && dest_dir && !source->is_directory &&
+        dest_dir->is_directory)
+    {
+        if (fs_user_can_read(fs, source) && fs_user_can_modify(fs, dest_dir))
+        {
+            new_file = file_copy(source);
+
+            if (new_file)
+            {
+                new_file->owner_id = fs->current_user->user_id;
+                new_file->group_id = fs->current_group->group_id;
+                new_file->permissions = USER_ALL + GROUP_READ + GROUP_EXEC +
+                                        OTHERS_READ + OTHERS_EXEC;
+
+                if (list_append((list_t *)dest_dir->contents, new_file))
+                {
+                    result = true;
+                }
+                else
+                {
+                    _write_message(fs, 4, "Could not add file to directory");
+                    file_free(new_file);
+                    free(new_file);
+                    new_file = NULL;
+                }
+            }
+            else
+            {
+                _write_message(fs, 3, "Could not create new file");
+            }
+        }
+        else
+        {
+            _write_message(fs, 2, "Access denied");
+        }
+    }
+    else
+    {
+        _write_message(fs, 1, "Invalid parameters");
+    }
+
+    return result;
+}
