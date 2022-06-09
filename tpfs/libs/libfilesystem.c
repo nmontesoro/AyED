@@ -959,7 +959,7 @@ bool fs_move_file(filesystem_t *fs, file_t *source_dir, file_t *dest_dir,
             {
                 result = list_append((list_t *)dest_dir->contents,
                                      (void *)source);
-                
+
                 if (!result)
                 {
                     /* Attempt to put the file back in its original location */
