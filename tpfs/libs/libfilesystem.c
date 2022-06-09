@@ -2,6 +2,10 @@
 #define MSG_MAX_LENGTH 81
 #endif
 
+#ifndef LIST_DIR_BUFFER_SIZE
+#define LIST_DIR_BUFFER_SIZE 40
+#endif
+
 #include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
@@ -63,7 +67,7 @@ void _write_message(filesystem_t *fs, uint8_t code, char *message);
 char *_str_to_heap(const char *str)
 {
     char *heap_str = NULL;
-    size_t length = strlen(str) + 1; // +1 for '\0'
+    const size_t length = strlen(str) + 1; // +1 for '\0'
 
     if (length > 0 && (heap_str = malloc(sizeof(char) * length)))
     {
@@ -458,7 +462,7 @@ bool fs_add_group(filesystem_t *fs, char *name)
 
 void _fs_print_groups_helper(_list_node_t *node, void *ctx)
 {
-    group_t *group = ((group_t *)node->value);
+    const group_t *group = ((group_t *)node->value);
     fprintf((FILE *)ctx, "%s: ", group->name);
     list_traverse(group->users, ctx, _fs_print_users_helper);
     fprintf((FILE *)ctx, "\n");
@@ -653,7 +657,7 @@ bool fs_user_can_execute(filesystem_t *fs, file_t *file)
 void _fs_list_dir_helper(_list_node_t *node, void *ctx)
 {
     file_t *file = (file_t *)node->value;
-    char str[40] = "\0";
+    char str[LIST_DIR_BUFFER_SIZE] = "\0";
 
     strftime(str, 40, "%Y-%m-%dT%H:%M:%S-03:00",
              localtime(&(file->modified_on)));

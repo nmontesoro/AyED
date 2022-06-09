@@ -250,12 +250,15 @@ file_t *file_copy(const file_t *file)
                                               contents)))
                     {
                         free(contents);
+                        contents = NULL;
                         free(name);
+                        name = NULL;
                     }
                 }
                 else
                 {
                     free(name);
+                    name = NULL;
                 }
             }
             else
@@ -265,6 +268,7 @@ file_t *file_copy(const file_t *file)
                                           file->is_directory, contents)))
                 {
                     free(name);
+                    name = NULL;
                 }
             }
         }
@@ -333,10 +337,7 @@ list_t *file_list_get_files(const list_t *list)
 
 void _file_list_free_helper(_list_node_t *node, void *ctx)
 {
-    file_t *file = (file_t *)node->value;
-    bool *result = (bool *)ctx;
-
-    *result &= file_free(file);
+    *(bool *)ctx &= file_free((file_t *)node->value);
 }
 
 bool file_list_free(list_t *list)
