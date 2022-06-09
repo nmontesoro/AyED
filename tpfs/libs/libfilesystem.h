@@ -184,7 +184,7 @@ void fs_print_groups(filesystem_t *fs, FILE *fp);
 bool fs_current_user_is_admin(filesystem_t *fs);
 
 /**
- * @brief Prints the contents of a directory to stdout (only if current  
+ * @brief Prints the contents of a directory to stdout (only if current
  * user has read permissions)
  * @param fs A pointer to the filesystem
  * @param dir The directory
@@ -242,7 +242,7 @@ bool fs_change_user_password(filesystem_t *fs, user_t *user, char *password);
 bool fs_remove_user_from_group(filesystem_t *fs, user_t *user, group_t *group);
 
 /**
- * @brief If the current user has execute permissions, change the 
+ * @brief If the current user has execute permissions, change the
  * current working directory
  * @param fs A pointer to the filesystem
  * @param dir A pointer to the directory
