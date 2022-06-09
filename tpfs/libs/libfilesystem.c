@@ -811,3 +811,31 @@ bool fs_change_user_password(filesystem_t *fs, user_t *user, char *password)
 
     return result;
 }
+
+bool fs_remove_user_from_group(filesystem_t *fs, user_t *user, group_t *group)
+{
+    bool result = false;
+
+    if (fs && user && group)
+    {
+        if (fs_current_user_is_admin(fs))
+        {
+            result = group_remove_user(group, user);
+
+            if (!result)
+            {
+                _write_message(fs, 3, "User does not belong to group");
+            }
+        }
+        else
+        {
+            _write_message(fs, 2, "Not enough permissions");
+        }
+    }
+    else
+    {
+        _write_message(fs, 1, "Invalid parameters");
+    }
+
+    return result;
+}

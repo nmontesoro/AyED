@@ -230,4 +230,14 @@ bool fs_create_dir(filesystem_t *fs, char *name, const uint16_t permissions,
  */
 bool fs_change_user_password(filesystem_t *fs, user_t *user, char *password);
 
+/**
+ * @brief If current user is admin, this function removes a user from a
+ * group
+ * @param fs A pointer to the filesystem
+ * @param user A pointer to the user
+ * @param group A pointer to the group
+ * @return True or false, depending on the result of the operation
+ */
+bool fs_remove_user_from_group(filesystem_t *fs, user_t *user, group_t *group);
+
 #endif
