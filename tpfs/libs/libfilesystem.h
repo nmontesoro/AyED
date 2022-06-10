@@ -337,4 +337,17 @@ void fs_traverse(filesystem_t *fs, file_t *start_dir, bool recursive, void *ctx,
  */
 void fs_list_directory_recursive(filesystem_t *fs, file_t *start_dir);
 
+/**
+ * @brief Finds all the items inside a directory that match a criteria
+ * defined by a callback function. Does NOT check permissions.
+ * @param fs A pointer to the filesystem
+ * @param start_dir A pointer to the starting directory
+ * @param ctx An optional pointer to context
+ * @param recursive Indicates whether to recurse into subdirectories
+ * @param cmp A pointer to a callback function
+ * @return
+ */
+list_t *fs_find_all(filesystem_t *fs, file_t *start_dir, void *ctx,
+                    bool recursive, bool cmp(file_t *, void *ctx));
+
 #endif

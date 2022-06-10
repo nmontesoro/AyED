@@ -1118,3 +1118,28 @@ void fs_list_directory_recursive(filesystem_t *fs, file_t *start_dir)
 
     free(prefix);
 }
+
+void _fs_find_all_helper(_list_node_t *node, void *ctx)
+{
+    void **ctxe = (void **)ctx;
+    bool (*cmp)(file_t *, void *) = ctxe[1];
+
+    if (cmp((file_t *) node->value, ctxe[2]))
+    {
+        list_append((list_t *)ctxe[0], node->value);
+    }
+}
+
+list_t *fs_find_all(filesystem_t *fs, file_t *start_dir, void *ctx,
+                    bool recursive, bool cmp(file_t *, void *ctx))
+{
+    list_t *list = list_new(UINT32_MAX);
+    void *ctxe[] = {list, cmp, ctx};
+
+    if (fs && start_dir && cmp && start_dir->is_directory && list)
+    {
+        fs_traverse(fs, start_dir, recursive, ctxe, _fs_find_all_helper);
+    }
+
+    return list;
+}
