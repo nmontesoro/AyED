@@ -142,7 +142,7 @@ bool fs_login(filesystem_t *fs, char *username, char *password);
  * @param file The file to be modified
  * @return True or false, depending on the result of the operation
  */
-bool fs_user_can_modify(filesystem_t *fs, file_t *file);
+bool fs_current_user_can_modify(filesystem_t *fs, file_t *file);
 
 /**
  * @brief Checks that all necessary conditions are met, and then creates
@@ -198,7 +198,7 @@ void fs_list_dir(filesystem_t *fs, file_t *dir);
  * @param file A pointer to the file
  * @return True or false, depending on the result of the operation
  */
-bool fs_user_can_read(filesystem_t *fs, file_t *file);
+bool fs_current_user_can_read(filesystem_t *fs, file_t *file);
 
 /**
  * @brief Checks if a user can execute a file or list a directory
@@ -206,7 +206,7 @@ bool fs_user_can_read(filesystem_t *fs, file_t *file);
  * @param file A pointer to the file
  * @return True or false, depending on the result of the operation
  */
-bool fs_user_can_execute(filesystem_t *fs, file_t *file);
+bool fs_current_user_can_execute(filesystem_t *fs, file_t *file);
 
 /**
  * @brief Checks that all necessary conditions are met, and then creates
@@ -349,5 +349,16 @@ void fs_list_directory_recursive(filesystem_t *fs, file_t *start_dir);
  */
 list_t *fs_find_all(filesystem_t *fs, file_t *start_dir, void *ctx,
                     bool recursive, bool cmp(file_t *, void *ctx));
+
+/**
+ * @brief Checks if a user can perform an action on a file
+ * @param fs A pointer to the filesystem
+ * @param file A pointer to the file
+ * @param user A pointer to the user
+ * @param action Refer to libpermissions.h. Can be USER_ALL, USER_READ,
+ * USER_WRITE or USER_EXEC, or a combination of them.
+ * @return True or false, depending on the result of the operation
+ */
+bool fs_user_can(filesystem_t *fs, file_t *file, user_t *user, uint16_t action);
 
 #endif

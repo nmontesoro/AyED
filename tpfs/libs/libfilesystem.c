@@ -559,26 +559,9 @@ bool fs_login(filesystem_t *fs, char *username, char *password)
     return result;
 }
 
-bool fs_user_can_modify(filesystem_t *fs, file_t *file)
+bool fs_current_user_can_modify(filesystem_t *fs, file_t *file)
 {
-    bool result = false;
-    group_t *group = NULL;
-
-    if (fs && file && fs->groups && fs->current_user)
-    {
-        group = group_list_get_by_id(fs->groups, file->group_id);
-
-        if (group)
-        {
-            result = (fs->current_user->user_id == file->owner_id &&
-                      file_can(file, USER_WRITE)) ||
-                     (user_in_group(group, fs->current_user) &&
-                      file_can(file, GROUP_WRITE)) ||
-                     (file_can(file, OTHERS_WRITE));
-        }
-    }
-
-    return result;
+    return fs_user_can(fs, file, fs->current_user, USER_WRITE);
 }
 
 bool fs_create_file(filesystem_t *fs, char *name, const uint16_t permissions,
@@ -590,7 +573,7 @@ bool fs_create_file(filesystem_t *fs, char *name, const uint16_t permissions,
     if (fs && name && contents && dir && dir->is_directory &&
         fs->current_user && fs->current_group)
     {
-        if (fs_user_can_modify(fs, dir))
+        if (fs_current_user_can_modify(fs, dir))
         {
             file = file_new(name,
                             fs->current_user->user_id,
@@ -629,48 +612,14 @@ bool fs_create_file(filesystem_t *fs, char *name, const uint16_t permissions,
     return result;
 }
 
-bool fs_user_can_read(filesystem_t *fs, file_t *file)
+bool fs_current_user_can_read(filesystem_t *fs, file_t *file)
 {
-    bool result = false;
-    group_t *group = NULL;
-
-    if (fs && file && fs->groups && fs->current_user)
-    {
-        group = group_list_get_by_id(fs->groups, file->group_id);
-
-        if (group)
-        {
-            result = (fs->current_user->user_id == file->owner_id &&
-                      file_can(file, USER_READ)) ||
-                     (user_in_group(group, fs->current_user) &&
-                      file_can(file, GROUP_READ)) ||
-                     (file_can(file, OTHERS_READ));
-        }
-    }
-
-    return result;
+    return fs_user_can(fs, file, fs->current_user, USER_READ);
 }
 
-bool fs_user_can_execute(filesystem_t *fs, file_t *file)
+bool fs_current_user_can_execute(filesystem_t *fs, file_t *file)
 {
-    bool result = false;
-    group_t *group = NULL;
-
-    if (fs && file && fs->groups && fs->current_user)
-    {
-        group = group_list_get_by_id(fs->groups, file->group_id);
-
-        if (group)
-        {
-            result = (fs->current_user->user_id == file->owner_id &&
-                      file_can(file, USER_EXEC)) ||
-                     (user_in_group(group, fs->current_user) &&
-                      file_can(file, GROUP_EXEC)) ||
-                     (file_can(file, OTHERS_EXEC));
-        }
-    }
-
-    return result;
+    return fs_user_can(fs, file, fs->current_user, USER_EXEC);
 }
 
 void _fs_list_dir_helper(_list_node_t *node, void *ctx)
@@ -698,7 +647,7 @@ void fs_list_dir(filesystem_t *fs, file_t *dir)
     {
         if (dir->is_directory)
         {
-            if (fs_user_can_read(fs, dir))
+            if (fs_current_user_can_read(fs, dir))
             {
                 list = (list_t *)dir->contents;
 
@@ -733,7 +682,7 @@ bool fs_create_dir(filesystem_t *fs, char *name, const uint16_t permissions,
     if (fs && name && dir && dir->is_directory && fs->current_user &&
         fs->current_group)
     {
-        if (fs_user_can_modify(fs, dir))
+        if (fs_current_user_can_modify(fs, dir))
         {
             contents = list_new(UINT8_MAX);
 
@@ -846,7 +795,7 @@ bool fs_change_directory(filesystem_t *fs, file_t *dir)
 
     if (fs && dir && dir->is_directory)
     {
-        if (fs_user_can_execute(fs, dir))
+        if (fs_current_user_can_execute(fs, dir))
         {
             fs->cwd = dir;
             result = true;
@@ -872,7 +821,7 @@ bool fs_copy_file(filesystem_t *fs, file_t *source, file_t *dest_dir)
     if (fs && source && dest_dir && !source->is_directory &&
         dest_dir->is_directory)
     {
-        if (fs_user_can_read(fs, source) && fs_user_can_modify(fs, dest_dir))
+        if (fs_current_user_can_read(fs, source) && fs_current_user_can_modify(fs, dest_dir))
         {
             new_file = file_copy(source);
 
@@ -920,7 +869,7 @@ bool fs_remove_file(filesystem_t *fs, file_t *parent_dir, file_t *file)
     if (fs && parent_dir && file && parent_dir->is_directory &&
         !file->is_directory)
     {
-        if (fs_user_can_modify(fs, parent_dir) && fs_user_can_modify(fs, file))
+        if (fs_current_user_can_modify(fs, parent_dir) && fs_current_user_can_modify(fs, file))
         {
             result = list_remove((list_t *)parent_dir->contents,
                                  (void *)file, POINTERS_MATCH, NULLF);
@@ -951,7 +900,7 @@ bool fs_move_file(filesystem_t *fs, file_t *source_dir, file_t *dest_dir,
     if (fs && source_dir && dest_dir && source && source_dir->is_directory &&
         dest_dir->is_directory && !source->is_directory)
     {
-        if (fs_user_can_modify(fs, dest_dir))
+        if (fs_current_user_can_modify(fs, dest_dir))
         {
             result = fs_remove_file(fs, source_dir, source);
 
@@ -988,7 +937,7 @@ bool fs_file_change_permissions(filesystem_t *fs, file_t *file,
 
     if (fs && file)
     {
-        if (fs_user_can_modify(fs, file))
+        if (fs_current_user_can_modify(fs, file))
         {
             result = file_set_permissions(file, permissions);
         }
@@ -1019,7 +968,7 @@ bool fs_modify_file(filesystem_t *fs, file_t *file, void *new_contents,
 
     if (fs && file && new_contents && !file->is_directory)
     {
-        if (fs_user_can_modify(fs, file))
+        if (fs_current_user_can_modify(fs, file))
         {
             previous_contents = file_set_contents(file, new_size, new_contents);
 
@@ -1124,7 +1073,7 @@ void _fs_find_all_helper(_list_node_t *node, void *ctx)
     void **ctxe = (void **)ctx;
     bool (*cmp)(file_t *, void *) = ctxe[1];
 
-    if (cmp((file_t *) node->value, ctxe[2]))
+    if (cmp((file_t *)node->value, ctxe[2]))
     {
         list_append((list_t *)ctxe[0], node->value);
     }
@@ -1142,4 +1091,22 @@ list_t *fs_find_all(filesystem_t *fs, file_t *start_dir, void *ctx,
     }
 
     return list;
+}
+
+bool fs_user_can(filesystem_t *fs, file_t *file, user_t *user, uint16_t action)
+{
+    bool result = false;
+    group_t *group = NULL;
+
+    if (fs && file && user &&
+        (action >= USER_EXEC) &&
+        (action <= USER_WRITE + USER_READ + USER_EXEC))
+    {
+        group = group_list_get_by_id(fs->groups, file->group_id);
+        result = ((file->owner_id == user->user_id && file_can(file, action)) ||
+                  (user_in_group(group, user) && file_can(file, action >> 4)) ||
+                  (file_can(file, action >> 8)));
+    }
+
+    return result;
 }
