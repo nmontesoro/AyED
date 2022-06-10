@@ -1046,3 +1046,32 @@ bool fs_modify_file(filesystem_t *fs, file_t *file, void *new_contents,
 
     return result;
 }
+
+void _fs_traverse_helper(_list_node_t *node, void *ctx)
+{
+    void **ctxe = (void **)ctx;
+    file_t *file = (file_t *)node->value;
+    void (*callback)(_list_node_t *, void *) = ctxe[3];
+
+    /* Call the function for the current file */
+    callback(node, ctxe[2]);
+
+    /* If recursive was specified */
+    if (*(bool *)ctxe[1] && file->is_directory)
+    {
+        fs_traverse((filesystem_t *)ctxe[0], file, *(bool *)ctxe[1], ctxe[2],
+                    callback);
+    }
+}
+
+void fs_traverse(filesystem_t *fs, file_t *start_dir, bool recursive, void *ctx,
+                 void callback(_list_node_t *node, void *ctx))
+{
+    void *ctxe[] = {fs, &recursive, ctx, callback};
+
+    if (fs && start_dir && callback && start_dir->is_directory)
+    {
+        /* Call the function for every file in the start directory */
+        list_traverse((list_t *)start_dir->contents, ctxe, _fs_traverse_helper);
+    }
+}

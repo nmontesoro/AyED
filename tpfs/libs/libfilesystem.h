@@ -314,4 +314,18 @@ bool fs_dir_change_permissions(filesystem_t *fs, file_t *dir,
  */
 bool fs_modify_file(filesystem_t *fs, file_t *file, void *new_contents,
                     uint32_t new_size);
+
+/**
+ * @brief Calls a function for every file in start_dir
+ * @param fs A pointer to the filesystem
+ * @param start_dir A pointer to the start directory
+ * @param recursive A boolean indicating whether to recurse into
+ * subdirectories
+ * @param ctx An optional pointer to context
+ * @param callback The function to call
+ * @return (void)
+ */
+void fs_traverse(filesystem_t *fs, file_t *start_dir, bool recursive, void *ctx,
+                 void callback(_list_node_t *node, void *ctx));
+
 #endif
