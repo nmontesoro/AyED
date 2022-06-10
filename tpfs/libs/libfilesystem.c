@@ -1075,3 +1075,43 @@ void fs_traverse(filesystem_t *fs, file_t *start_dir, bool recursive, void *ctx,
         list_traverse((list_t *)start_dir->contents, ctxe, _fs_traverse_helper);
     }
 }
+
+void _fs_list_dir_recursive_helper(_list_node_t *node, void *ctx)
+{
+    void **ctxe = (void **)ctx;
+    char *str = (char *)ctxe[0];
+    uint32_t *len = (uint32_t *)ctxe[1];
+    uint32_t *depth = (uint32_t *)ctxe[2];
+    file_t *file = (file_t *)node->value;
+
+    printf("%s%s\n", str, file->name);
+
+    if (file->is_directory && list_get_length((list_t *)file->contents) > 0)
+    {
+        if (*len >= 2)
+        {
+            str[*len - 2] = '\0';
+            strcat(str, "  ");
+        }
+
+        strcat(str, "\t|--");
+        *len += 4;
+        *depth += 1;
+    }
+    else if (!node->next && *len >= 4 * *depth)
+    {
+        str[*len - (4 * *depth--)] = '\0';
+    }
+}
+
+void fs_list_directory_recursive(filesystem_t *fs, file_t *start_dir)
+{
+    char *prefix = calloc(1024, sizeof(char));
+    uint32_t len = 0;
+    uint32_t depth = 0;
+    void *ctxe[] = {prefix, &len, &depth};
+
+    fs_traverse(fs, start_dir, true, ctxe, _fs_list_dir_recursive_helper);
+
+    free(prefix);
+}
