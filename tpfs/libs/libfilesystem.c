@@ -1111,7 +1111,10 @@ void fs_list_directory_recursive(filesystem_t *fs, file_t *start_dir)
     uint32_t depth = 0;
     void *ctxe[] = {prefix, &len, &depth};
 
-    fs_traverse(fs, start_dir, true, ctxe, _fs_list_dir_recursive_helper);
+    if (fs && start_dir && start_dir->is_directory)
+    {
+        fs_traverse(fs, start_dir, true, ctxe, _fs_list_dir_recursive_helper);
+    }
 
     free(prefix);
 }

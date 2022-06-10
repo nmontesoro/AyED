@@ -329,7 +329,7 @@ void fs_traverse(filesystem_t *fs, file_t *start_dir, bool recursive, void *ctx,
                  void callback(_list_node_t *node, void *ctx));
 
 /**
- * @brief (EXPERIMENTAL) Lists the contents of a directory and its 
+ * @brief (EXPERIMENTAL) Lists the contents of a directory and its
  * subdirectories in tree form
  * @param fs A pointer to the filesystem
  * @param start_dir A pointer to the start directory
