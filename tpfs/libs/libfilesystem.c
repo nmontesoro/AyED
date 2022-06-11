@@ -900,7 +900,8 @@ bool fs_move_file(filesystem_t *fs, file_t *source_dir, file_t *dest_dir,
     if (fs && source_dir && dest_dir && source && source_dir->is_directory &&
         dest_dir->is_directory && !source->is_directory)
     {
-        if (fs_current_user_can_modify(fs, dest_dir))
+        if (fs_current_user_can_modify(fs, source_dir) &&
+            fs_current_user_can_modify(fs, dest_dir))
         {
             result = fs_remove_file(fs, source_dir, source);
 
