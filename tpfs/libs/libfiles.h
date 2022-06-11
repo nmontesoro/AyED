@@ -19,6 +19,7 @@ typedef struct _file_t
     time_t created_on;
     time_t modified_on;
     void *contents;
+    struct _file_t *parent;
 } file_t;
 
 /**
@@ -31,11 +32,13 @@ typedef struct _file_t
  * @param size The size of the file, in bytes
  * @param is_directory A value describing if the file is a directory
  * @param contents A pointer to the contents of the file
+ * @param parent A pointer to the parent of the file. Must be a 
+ * directory, or NULL
  * @return A pointer to the new file, or NULL if something failed
  */
 file_t *file_new(char *name, const uint8_t owner_id, const uint8_t group_id,
                  const uint16_t permissions, const uint32_t size,
-                 const bool is_directory, void *contents);
+                 const bool is_directory, void *contents, file_t *parent);
 
 /**
  * @brief Frees the memory taken by a file object
@@ -195,5 +198,21 @@ list_t *file_list_get_files(const list_t *list);
  * @return True or false, depending on the result of the operation
  */
 bool file_list_free(list_t *list);
+
+/**
+ * @brief Sets the parent property of a file
+ * @param file The file
+ * @param parent The new parent (must be a directory)
+ * @return True or false, depending on the result of the operation
+ */
+bool file_set_parent(file_t *file, file_t *parent);
+
+/**
+ * @brief Returns the parent of a file
+ * @param file The file
+ * @return A pointer to the parent directory of a file, or NULL if 
+ * something failed (or the file represents the root directory)
+ */
+file_t *file_get_parent(file_t *file);
 
 #endif

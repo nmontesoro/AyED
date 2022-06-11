@@ -12,11 +12,12 @@ bool _file_set_modified(file_t *file);
 
 file_t *file_new(char *name, const uint8_t owner_id, const uint8_t group_id,
                  const uint16_t permissions, const uint32_t size,
-                 const bool is_directory, void *contents)
+                 const bool is_directory, void *contents, file_t *parent)
 {
     file_t *new_file = NULL;
 
-    if ((new_file = malloc(sizeof(file_t))))
+    if ((parent == NULL || (parent != NULL && parent->is_directory)) &&
+        (new_file = malloc(sizeof(file_t))))
     {
         new_file->name = name;
         new_file->owner_id = owner_id;
@@ -25,7 +26,7 @@ file_t *file_new(char *name, const uint8_t owner_id, const uint8_t group_id,
         new_file->size = size;
         new_file->is_directory = is_directory;
         new_file->contents = contents;
-
+        new_file->parent = parent;
         new_file->created_on = time(NULL);
         new_file->modified_on = new_file->created_on;
     }
@@ -247,7 +248,7 @@ file_t *file_copy(const file_t *file)
                     if (!(new_file = file_new(name, file->owner_id,
                                               file->group_id, file->permissions,
                                               file->size, file->is_directory,
-                                              contents)))
+                                              contents, file->parent)))
                     {
                         free(contents);
                         contents = NULL;
@@ -265,7 +266,8 @@ file_t *file_copy(const file_t *file)
             {
                 if (!(new_file = file_new(name, file->owner_id, file->group_id,
                                           file->permissions, file->size,
-                                          file->is_directory, contents)))
+                                          file->is_directory, contents, 
+                                          file->parent)))
                 {
                     free(name);
                     name = NULL;
@@ -353,4 +355,29 @@ bool file_list_free(list_t *list)
     }
 
     return result;
+}
+
+bool file_set_parent(file_t *file, file_t *parent)
+{
+    bool result = false;
+
+    if (file && parent && parent->is_directory)
+    {
+        file->parent = parent;
+        result = true;
+    }
+
+    return result;
+}
+
+file_t *file_get_parent(file_t *file)
+{
+    file_t *parent = NULL;
+
+    if (file)
+    {
+        parent = file->parent;
+    }
+
+    return parent;
 }

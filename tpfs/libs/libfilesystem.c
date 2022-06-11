@@ -157,7 +157,7 @@ file_t *_init_root_dir()
     if ((root_contents = list_new(UINT32_MAX)))
     {
         if ((root_dir = file_new(name, 0, 0, USER_ALL + GROUP_ALL, 0, true,
-                                 (void *)root_contents)) == NULL)
+                                 (void *)root_contents, NULL)) == NULL)
         {
             free(name);
             name = NULL;
@@ -578,7 +578,7 @@ bool fs_create_file(filesystem_t *fs, char *name, const uint16_t permissions,
             file = file_new(name,
                             fs->current_user->user_id,
                             fs->current_group->group_id,
-                            permissions, size, false, contents);
+                            permissions, size, false, contents, dir);
 
             if (file)
             {
@@ -691,7 +691,7 @@ bool fs_create_dir(filesystem_t *fs, char *name, const uint16_t permissions,
                 file = file_new(name,
                                 fs->current_user->user_id,
                                 fs->current_group->group_id,
-                                permissions, 0, true, contents);
+                                permissions, 0, true, contents, dir);
 
                 if (file)
                 {
@@ -907,12 +907,14 @@ bool fs_move_file(filesystem_t *fs, file_t *source_dir, file_t *dest_dir,
 
             if (result)
             {
+                file_set_parent(source, dest_dir);
                 result = list_append((list_t *)dest_dir->contents,
                                      (void *)source);
 
                 if (!result)
                 {
                     /* Attempt to put the file back in its original location */
+                    file_set_parent(source, source_dir);
                     list_append((list_t *)source_dir->contents, (void *)source);
                     _write_message(fs, 3, "Could not add file to directory");
                 }
