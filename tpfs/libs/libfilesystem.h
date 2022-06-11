@@ -361,4 +361,13 @@ list_t *fs_find_all(filesystem_t *fs, file_t *start_dir, void *ctx,
  */
 bool fs_user_can(filesystem_t *fs, file_t *file, user_t *user, uint16_t action);
 
+/**
+ * @brief Returns a string representing the full path to a file
+ * @param fs A pointer to the filesystem
+ * @param start_dir A pointer to the start directory (could be fs->root_dir)
+ * @param file A pointer to the file
+ * @return A string, or NULL if something failed
+ */
+char *fs_get_full_path(filesystem_t *fs, file_t *start_dir, file_t *file);
+
 #endif

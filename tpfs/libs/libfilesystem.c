@@ -6,6 +6,10 @@
 #define LIST_DIR_BUFFER_SIZE 40
 #endif
 
+#ifndef MAX_PATH_LEN
+#define MAX_PATH_LEN 4096
+#endif
+
 #include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
@@ -1112,4 +1116,39 @@ bool fs_user_can(filesystem_t *fs, file_t *file, user_t *user, uint16_t action)
     }
 
     return result;
+}
+
+char *fs_get_full_path(filesystem_t *fs, file_t *start_dir, file_t *file)
+{
+    char *path = NULL,
+         *dup = NULL;
+    file_t *current_file = NULL;
+
+    if (fs && start_dir && file && start_dir->is_directory)
+    {
+        path = calloc(MAX_PATH_LEN, sizeof(char));
+
+        if (path)
+        {
+            current_file = file;
+
+            while (current_file && (current_file != start_dir))
+            {
+                sprintf(path, "/%s%s", current_file->name,
+                        (dup = strdup(path)));
+                current_file = current_file->parent;
+                free(dup);
+            }
+        }
+        else
+        {
+            _write_message(fs, 2, "Could not allocate memory");
+        }
+    }
+    else
+    {
+        _write_message(fs, 1, "Invalid parameters");
+    }
+
+    return path;
 }
