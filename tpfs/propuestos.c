@@ -41,33 +41,30 @@ uint64_t ej1(filesystem_t *fs, char *username)
     return sum;
 }
 
-void ej2_helper(_list_node_t *node, void *ctx)
+bool ej2_helper(file_t *file, void *ctx)
 {
-    void **ctxe = (void **)ctx;
-    char *path = (char *)ctxe[0];
-    char *file_name = (char *)ctxe[1];
+    return (strcmp(file->name, ctx) == 0);
+}
+
+void ej2_printer(_list_node_t *node, void *ctx)
+{
+    filesystem_t *fs = ctx;
     file_t *file = (file_t *)node->value;
-
-    if (file->is_directory)
-    {
-        strcat(path, file->name);
-        strcat(path, "/");
-    }
-
-    if (strcmp(file->name, file_name) == 0)
-    {
-        printf("%s%s\n", path, file_name);
-    }
+    char *path = fs_get_full_path(fs, fs->root_dir, file);
+    printf("%s\n", path);
+    free(path);
 }
 
 void ej2(filesystem_t *fs, char *file_name)
 {
-    char *path = calloc(1024, sizeof(char));
-    path[0] = '/';
+    list_t *list = NULL;
 
-    void *ctxe[] = {path, file_name};
-    fs_traverse(fs, fs->cwd, true, ctxe, ej2_helper);
-    free(path);
+    if (fs && file_name)
+    {
+        list = fs_find_all(fs, fs->root_dir, file_name, true, ej2_helper);
+        list_traverse(list, fs, ej2_printer);
+        list_free(list);
+    }
 }
 
 void ej3_printer(_list_node_t *node, void *ctx)
